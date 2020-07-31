@@ -10,16 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_31_132429) do
+ActiveRecord::Schema.define(version: 2020_07_31_134341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "invoices", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_invoices_on_user_id"
+  end
 
   create_table "lists", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "payment_type"
     t.index ["project_id"], name: "index_lists_on_project_id"
   end
 
@@ -39,6 +47,8 @@ ActiveRecord::Schema.define(version: 2020_07_31_132429) do
     t.datetime "end_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "end_note"
+    t.integer "price"
     t.index ["task_id"], name: "index_sessions_on_task_id"
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
@@ -49,6 +59,10 @@ ActiveRecord::Schema.define(version: 2020_07_31_132429) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "approved"
+    t.integer "price"
+    t.datetime "completed_by"
+    t.boolean "completed", default: false
     t.index ["list_id"], name: "index_tasks_on_list_id"
   end
 
@@ -74,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_07_31_132429) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "invoices", "users"
   add_foreign_key "lists", "projects"
   add_foreign_key "projects", "users"
   add_foreign_key "sessions", "tasks"
