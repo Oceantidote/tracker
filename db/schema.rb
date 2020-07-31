@@ -31,16 +31,7 @@ ActiveRecord::Schema.define(version: 2020_07_31_135545) do
     t.index ["project_id"], name: "index_lists_on_project_id"
   end
 
-  create_table "projects", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.boolean "archived", default: false
-    t.index ["user_id"], name: "index_projects_on_user_id"
-  end
-
-  create_table "sessions", force: :cascade do |t|
+  create_table "periods", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.bigint "user_id", null: false
@@ -50,8 +41,17 @@ ActiveRecord::Schema.define(version: 2020_07_31_135545) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "end_note"
     t.integer "price"
-    t.index ["task_id"], name: "index_sessions_on_task_id"
-    t.index ["user_id"], name: "index_sessions_on_user_id"
+    t.index ["task_id"], name: "index_periods_on_task_id"
+    t.index ["user_id"], name: "index_periods_on_user_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "archived", default: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -91,9 +91,9 @@ ActiveRecord::Schema.define(version: 2020_07_31_135545) do
 
   add_foreign_key "invoices", "users"
   add_foreign_key "lists", "projects"
+  add_foreign_key "periods", "tasks"
+  add_foreign_key "periods", "users"
   add_foreign_key "projects", "users"
-  add_foreign_key "sessions", "tasks"
-  add_foreign_key "sessions", "users"
   add_foreign_key "tasks", "lists"
   add_foreign_key "user_tasks", "tasks"
   add_foreign_key "user_tasks", "users"

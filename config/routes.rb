@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     resources :tasks, only: [:create]
   end
   resources :tasks, except: [:create, :new] do
-    # resources :sessions
+    resources :periods
   end
   resources :invoices
   root to: 'pages#home'
