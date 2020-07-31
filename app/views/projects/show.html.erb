@@ -1,9 +1,15 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>User:</strong>
-  <%= @project.user_id %>
-</p>
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<div class="overall-cont">
+  <%= render "shared/lhs_nav" %>
+  <div class="rhs-cont">
+    <p id="notice"><%= notice %></p>
+    <div class="container-fluid">
+      <%= link_to 'Back', projects_path %> | <%= link_to 'Edit', edit_project_path(@project) %>
+      <h2><%= @project.name %></h2>
+      <div class="accordion" id="accordionExample">
+        <% @project.lists.each_with_index do |list, index| %>
+          <%= render "shared/list", list: list, index: index  %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

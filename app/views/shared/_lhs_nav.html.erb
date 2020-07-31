@@ -1,0 +1,12 @@
+<div class="lhs-nav">
+  <%= link_to invoices_path, class: 'nav-btn' do %>
+    <div class="btn btn-100 <%= controller_name == "invoices" ? 'btn-primary' : 'btn-secondary'  %>">
+      Invoices
+    </div>
+  <% end %>
+  <%= link_to projects_path, class: 'nav-btn' do %>
+    <div class="btn btn-100 <%= controller_name == "projects" ? 'btn-primary' : 'btn-secondary'  %>">
+      Projects
+    </div>
+  <% end %>
+</div>

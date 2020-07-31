@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header task-header" id="task_<%= task.id %>">
+    <h2 class="mb-0">
+      <button class="btn btn-link btn-block text-left <%= 'collapsed' unless index == 0  %>" type="button" data-toggle="collapse" data-target="#collapse_task_<%= task.id %>" aria-expanded="<%= index == 0 ? true : false %>" aria-controls="collapse_task_<%= task.id %>">
+        <%= task.name %>
+      </button>
+    </h2>
+  </div>
+
+  <div id="collapse_task_<%= task.id %>" class="collapse <%= 'show' if index == 0  %>" aria-labelledby="headingOne" data-parent="#listAccordionExample_<%= task.list.id %>">
+    <div class="card-body">
+      <div class="accordion" id="taskAccordionExample_<%= task.id %>">
+        <% in_progress = task.periods.where(end_time: nil) %>
+        <% if in_progress.any? %>
+          <% task.periods.where(end_time: nil).each_with_index do |period| %>
+            <%= render "shared/period", period: period %>
+          <% end %>
+        <% end %>
+        <h5>Completed</h5>
+        <% task.periods.where.not(end_time: nil).order(end_time: :desc).each_with_index do |period, index| %>
+          <%= render "shared/complete_period", period: period, index: index %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

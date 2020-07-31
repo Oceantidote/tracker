@@ -1,27 +1,21 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Projects</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @projects.each do |project| %>
-      <tr>
-        <td><%= project.user_id %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Project', new_project_path %>
+<div class="overall-cont">
+  <%= render "shared/lhs_nav" %>
+  <div class="rhs-cont">
+    <p id="notice"><%= notice %></p>
+    <div class="container-fluid">
+      <div class="row">
+        <% @projects.each do |project| %>
+          <div class="col-4">
+            <%= link_to project_path(project) do %>
+              <div class="card">
+                <div class="card-title">
+                  <%= project.name %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

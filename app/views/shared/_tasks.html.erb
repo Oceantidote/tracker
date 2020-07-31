@@ -1,0 +1,10 @@
+<div class="accordion" id="listAccordionExample_<%= list.id %>">
+  <h3>In Progress</h3>
+  <% list.tasks.where(completed: false).each_with_index do |task, index| %>
+    <%= render "shared/task", task: task, index: index %>
+  <% end %>
+  <h3>Completed</h3>
+  <% list.tasks.where(completed: true).each_with_index do |task, index| %>
+    <%= render "shared/complete_task", task: task, index: index %>
+  <% end %>
+</div>
