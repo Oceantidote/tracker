@@ -13,7 +13,12 @@ Rails.application.routes.draw do
     resources :tasks, only: [:create]
   end
   resources :tasks, except: [:create, :new] do
-    resources :periods
+    resources :periods, only: [:create]
+  end
+  resources :periods, only: [:show, :update, :index] do
+    member do
+      patch :finish
+    end
   end
   resources :invoices
   root to: 'pages#home'
