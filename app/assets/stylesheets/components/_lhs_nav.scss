@@ -28,6 +28,7 @@
 .secondary {
   color: $gray;
   &:hover {
+    text-decoration: none !important;
     color: $primary;
   }
 }
