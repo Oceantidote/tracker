@@ -12,13 +12,14 @@
           <h5 class="text-center">total: <strong>£ <%= @period.humanized_total %></strong></h5>
         <% end %>
       </div>
-
-
-
     <% else %>
       <div class="jcst">
-        <div class="avatar-sm mt-2 mr-2" title='<%= "#{@period.user.full_name}" %>' style="background-image: url('<%= @period.user.photo.attached? ? url_for(@period.user.photo) : asset_path("user.png") %>')" ></div>
-        <h1 class="text-center blue"><strong>has been <%= @period.title %></strong></h1>
+        <% if @period.user == current_user %>
+          <h1 class="text-center blue"><strong>You have been <%= @period.title %></strong></h1>
+        <% else %>
+          <div class="avatar-sm mt-2 mr-2" title='<%= "#{@period.user.full_name}" %>' style="background-image: url('<%= @period.user.photo.attached? ? url_for(@period.user.photo) : asset_path("user.png") %>')" ></div>
+          <h1 class="text-center blue"><strong>has been <%= @period.title %></strong></h1>
+        <% end %>
       </div>
       <h3 class="text-center">for <strong> <%= @period.task.list.project.user == current_user ? "You" : @period.task.list.project.user.first_name %></strong> since <%= @period.created_at.strftime('%I:%M') %> <%= @period.created_at.strftime('%p').downcase %> <%= @period.created_at.strftime('%a') %></h3>
       <div class="jc">
