@@ -12,9 +12,9 @@ Project.destroy_all
 User.destroy_all
 
 puts "Creating users"
-me = User.create!(first_name: "Leonard", email: "leonardpercival@gmail.com", password: '123123', admin:true)
-client = User.create!(first_name: "Ariel", last_name: "Roberts", email: "normal@gmail.com", password: '123123')
-User.create(admin: true, email: "ife@gmail.com", password: '123123', first_name: "ife", company: "HD", last_name: "Odugbesan")
+me = User.create!(first_name: "Leonard", last_name: "Percival", position: "Director" email: "leonardpercival@gmail.com", password: '123123', admin:true)
+client = User.create!(first_name: "Ariel", last_name: "Roberts", position: "Founder", email: "normal@gmail.com", password: '123123')
+User.create(admin: true, email: "ife@gmail.com", password: '123123', position: "Developer", first_name: "ife", company: "HD", last_name: "Odugbesan")
 puts "Creating projects and lists"
 project = Project.create!(user: client, name: "Normal Project", dev_user: me)
 quoted_list = List.create!(project: project, payment_type: "qouted", name: "Quoted List")
