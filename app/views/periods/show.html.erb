@@ -13,6 +13,8 @@
         <% end %>
       </div>
 
+
+
     <% else %>
       <div class="jcst">
         <div class="avatar-sm mt-2 mr-2" title='<%= "#{@period.user.full_name}" %>' style="background-image: url('<%= @period.user.photo.attached? ? url_for(@period.user.photo) : asset_path("user.png") %>')" ></div>
