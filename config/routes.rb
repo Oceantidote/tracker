@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :projects, except: [:destroy] do
     resources :team_memberships, only: [:create]
-    resources :lists, only: [:new, :create]
+    resources :lists, only: [:new, :create, :index]
   end
-  resources :lists, except: [:new, :create, :destroy] do
+  resources :lists, except: [:new, :create, :index] do
     resources :tasks, only: [:create]
   end
   resources :tasks, except: [:create, :new] do

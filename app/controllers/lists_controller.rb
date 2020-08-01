@@ -4,7 +4,8 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.all
+    @project = Project.find(params[:project_id])
+    @lists = List.where(project: @project)
   end
 
   # GET /lists/1

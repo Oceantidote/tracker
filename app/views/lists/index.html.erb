@@ -1,10 +1,13 @@
-<div class="back-container"></div>
+<div class="back-container">
+  <h3 class="text-center"><%= link_to @project.name, project_path(@project), class: 'secondary' %></h3>
+  <%= render "shared/line", path: nil %>
+</div>
 <div class="container">
-  <%= link_to 'Back', projects_path %> | <%= link_to 'Edit', edit_project_path(@project) %>
-  <h2><%= @project.name %></h2>
-  <div class="accordion" id="accordionExample">
-    <% @project.lists.each_with_index do |list, index| %>
-      <%= render "shared/list", list: list, index: index  %>
-    <% end %>
+  <div class="backed">
+    <div class="accordion" id="accordionExample">
+      <% @project.lists.each_with_index do |list, index| %>
+        <%= render "shared/list", list: list, index: index  %>
+      <% end %>
+    </div>
   </div>
 </div>
