@@ -1,11 +1,15 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destro, :team_memberships]
 
   # GET /projects
   # GET /projects.json
 
   def index
-    @projects = Project.all
+    @projects = current_user.visible_projects
+  end
+
+  def team_memberships
+    @memberships = @project.team_memberships
   end
 
   # GET /projects/1
@@ -26,7 +30,9 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-
+    project_params[:dev_user_id] ? @project.user = current_user : @project.dev_user = current_user
+    TeamMembership.create!(user: @project.user, relation: "client", project: @project)
+    TeamMembership.create!(user: @project.dev_user, relation: "lead", project: @project)
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
@@ -70,6 +76,6 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:user_id)
+      params.require(:project).permit(:user_id, :dev_user_id, :name)
     end
 end

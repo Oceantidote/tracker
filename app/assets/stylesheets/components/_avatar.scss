@@ -78,7 +78,10 @@
   }
 }
 .lead {
-  border: 2px solid black;
+  border: 2px solid $blue;
+}
+.client {
+  border: 2px solid $yellow;
 }
 .grey {
   color: gray;
@@ -88,6 +91,9 @@
 }
 p {
   margin-bottom: 0;
+}
+.sub-hold {
+  min-width: 120px;
 }
 .subtext {
   font-size: 0.8rem;

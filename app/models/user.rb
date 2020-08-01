@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :validatable
-  before_save :cap_name
+  before_validation :cap_name
   has_many :projects
   has_many :invoices
   has_many :periods, through: :projects
@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :invoices, through: :dev_projects
   validates :first_name, presence: true
   validates :last_name, presence: true
+  has_many :team_memberships, dependent: :destroy
+  has_many :visible_projects, through: :team_memberships, source: :project
   has_one_attached :photo
   has_one_attached :company_logo
   def my_pending_invoices

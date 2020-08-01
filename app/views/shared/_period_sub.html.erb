@@ -1,0 +1,39 @@
+<div class="jc">
+  <!-- TASK TYPE -->
+  <div class="sub-hol">
+    <h5 class="ml-3 mr-3"><span class="subtext">task type</span><br><%= period.task.list.type_emjoi %></h5>
+  </div>
+
+  <!-- SPRINT TIME -->
+  <div class="sub-hold">
+    <h5 class="ml-3 mr-3"><span class="subtext">time spent this sprint</span><br><%= period.readable_length(period.length) %></h5>
+  </div>
+
+  <!-- FREE -->
+  <% if period.task.list.payment_type == "free" %>
+  <div class="sub-hold">
+    <h5><span class="subtext">total</span><br><span class="green">Free</span></h5>
+  </div>
+  <% end %>
+
+  <!-- QUOTED <--->
+  <% if period.task.list.payment_type == "quoted" %>
+    <div class="sub-hold">
+      <h5 class="ml-3 mr-3"><span class="subtext">target time for task</span><br><%= period.readable_length(period.task.length) %></h5>
+    </div>
+    <div class="sub-hold">
+      <h5 class="ml-3 mr-3"><span class="subtext">time spent so far</span><br><span class="<%= period.task.length < period.task.total_length ? 'red' : 'green' %>"><%= period.readable_length(period.task.total_length) %></span></h5>
+    </div>
+  <% end %>
+
+  <!-- SUPPORT -->
+  <% if period.task.list.payment_type == "support" %>
+    <div class="sub-hold">
+      <h5 class="ml-3 mr-3"><span class="subtext">rate</span><br>£<%= period.user.hourly_rate %>/hr</h5>
+    </div>
+    <div class="sub-hold">
+      <h5><span class="subtext">total</span><br><strong><%= period.humanized_total %></strong></h5>
+    </div>
+  <% end %>
+</div>
+

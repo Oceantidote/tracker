@@ -7,8 +7,10 @@ class Invoice < ApplicationRecord
       "redbg"
     elsif due_by < Time.now
       "yellowbg"
-    else
+    elsif due_by > Time.now && due_by < 1.day.from_now
       "greenbg"
+    else
+      ""
     end
   end
 end

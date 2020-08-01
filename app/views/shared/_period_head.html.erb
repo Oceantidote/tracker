@@ -1,0 +1,19 @@
+<% if period.end_time %>
+  <div class="jcst">
+    <div class="avatar-sm mt-2 mr-2" title='<%= "#{period.user.full_name}" %>' style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : asset_path("user.png") %>')" ></div>
+    <h1 class="text-center blue"><strong><%= period.user == current_user ? "You finished" : "finished" %> <%= period.title %></strong></h1>
+  </div>
+  <h3 class="text-center">for <strong><%= link_to period.task.name, task_path(period.task), class: "secondary" %> </strong> <%= distance_of_time_in_words(period.created_at - Time.now) %> ago</h3>
+<% else %>
+  <div class="jcst">
+    <!-- LIVE -->
+    <% if period.user == current_user %>
+      <h1 class="text-center blue"><strong>You have been <%= period.title %></strong> 🏃‍♂️</h1>
+    <% else %>
+      <div class="avatar-sm mt-2 mr-2" title='<%= "#{period.user.full_name}" %>' style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : asset_path("user.png") %>')" ></div>
+      <h1 class="text-center blue"><strong>has been <%= period.title %></strong> 🏃‍♂️</h1>
+    <% end %>
+  </div>
+  <h3 class="text-center">on <strong><%= link_to period.task.name, task_path(period.task), class: "secondary" %> </strong>since <strong><%= period.created_at.strftime("%I:%M") %> <%= period.created_at.strftime("%p").downcase %></strong><%= " " + period.created_at.strftime("%a") if period.length > 1440 %> </h3>
+<% end %>
+

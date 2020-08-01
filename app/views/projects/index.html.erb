@@ -1,26 +1,31 @@
-<div class="top-header">
-  <h2><strong>Projects</strong></h2>
+<div class="top-header rel">
+  <h2><strong>Projects </strong></h2>
+  <%= render 'shared/line' %>
 </div>
 <div class="container">
   <div class="row">
-    <% @projects.each do |project| %>
-      <div class=" col-xs-12 col-lg-4 col-md-6">
+    <% if @projects.empty? %>
+      <div class="col-sm-3 offset-sm-9 text-right">
+        <h1>👆</h1>
+        <h5>It looks like you haven't got any projects yet. Let's make your first one</h5>
+      </div>
+    <% else %>
+      <% @projects.each do |project| %>
+        <div class=" col-xs-12 col-lg-4 col-md-6">
           <div class="backed back-hov">
             <h4 class="elipssis"><strong><%= project.name %></strong></h4>
             <h5 class="elipssis"><%= project.user.company %></h5>
             <div class="team-holder">
-              <div class="avatar-sm lead" title='<%= "#{project.dev_user.full_name} - Team Lead" %>' style="background-image: url('<%= project.dev_user.photo.attached? ? url_for(project.dev_user.photo) : 'user.png' %>')" ></div>
-              <% project.members[0..3].each do |member| %>
-                <div class="avatar-sm" title='<%= "#{member.full_name}" %>' style="background-image: url('<%= member.photo.attached? ? url_for(member.photo) : 'user.png' %>')" ></div>
-              <% end %>
+              <%= render "shared/member_row", project: project, delete: false, hide_add: true %>
             </div>
-
             <%= link_to project_path(project) do %>
               <div class="link"></div>
             <% end %>
           </div>
-      </div>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
+
 

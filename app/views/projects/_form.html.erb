@@ -2,12 +2,21 @@
 <%= simple_form_for(@project) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
   <div class="form-inputs">
-    <%= f.association :user %>
+    <% if current_user.admin %>
+      <%= f.association :user, collection: User.where(admin: false), prompt: "Which client is this project for?", label_method: :full_name, value_method: :id, include_blank: false, label: 'Client' %>
+    <% else %>
+      <%= f.association :dev_user, collection: User.where(admin: true), prompt: "Who would you like leading the project?", label_method: :full_name, value_method: :id, include_blank: false %>
+    <% end %>
+    <%= f.input :name, placeholder: "What shall we call it?" %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+
+
+
+
+
+  <div class="jc mt-4">
+    <%= f.button :submit, "Create Project", class: "btn-primary" %>
   </div>
 <% end %>

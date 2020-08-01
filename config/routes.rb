@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'projects/:id/team_memberships', to: "projects#team_memberships"
+  resources :team_memberships, only: [:destroy]
   authenticate :user, ->(user) { user.admin? } do
     root 'pages#developer', as: :admin_authenticated_root
   end
@@ -7,6 +9,7 @@ Rails.application.routes.draw do
   end
   devise_for :users
   resources :projects, except: [:destroy] do
+    resources :team_memberships, only: [:create]
     resources :lists, only: [:new, :create]
   end
   resources :lists, except: [:new, :create, :destroy] do
