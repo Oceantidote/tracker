@@ -12,7 +12,7 @@
         <tbody>
           <% @invoices.each do |invoice| %>
             <tr>
-              <td><%= invoice.user_id %></td>
+              <td><%= invoice.project.name %></td>
               <td><%= link_to 'Show', invoice %></td>
             </tr>
           <% end %>

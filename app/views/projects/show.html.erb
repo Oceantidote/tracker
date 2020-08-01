@@ -25,7 +25,14 @@
         <h4 class="elipssis"><strong>To Dos</strong></h4>
         <div class="backed-inner jcol">
           <% @project.lists.each do |list| %>
-            <h5><%= link_to list.name, list_path(list), class: 'secondary' %> - <span classs="<%= 'green' if list.incomplete_tasks > 0  %>"></span>  <%= list.incomplete_tasks %></h5>
+            <h5><%= link_to list.name, list_path(list), class: 'secondary' %>
+               - <span class="<%= 'green' if list.incomplete_tasks.length == 0  %>">
+                (<%= list.tasks.length - list.incomplete_tasks.length %>/<%= list.tasks.length %>)
+                <% if list.incomplete_tasks.length == 0 %>
+                  <i class="fa fa-check-square"></i>
+                <% end %>
+              </span>
+            </h5>
           <% end %>
         </div>
       </div>
