@@ -5,6 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+ActivityLog.destroy_all
+Invoice.destroy_all
+TeamMembership.destroy_all
 Period.destroy_all
 Task.destroy_all
 List.destroy_all
@@ -12,7 +15,7 @@ Project.destroy_all
 User.destroy_all
 
 puts "Creating users"
-me = User.create!(first_name: "Leonard", last_name: "Percival", position: "Director" email: "leonardpercival@gmail.com", password: '123123', admin:true)
+me = User.create!(first_name: "Leonard", last_name: "Percival", position: "Director", email: "leonardpercival@gmail.com", password: '123123', admin:true)
 client = User.create!(first_name: "Ariel", last_name: "Roberts", position: "Founder", email: "normal@gmail.com", password: '123123')
 User.create(admin: true, email: "ife@gmail.com", password: '123123', position: "Developer", first_name: "ife", company: "HD", last_name: "Odugbesan")
 puts "Creating projects and lists"
