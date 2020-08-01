@@ -9,12 +9,14 @@
         <h4 class="elipssis"><strong>Working live now</strong></h4>
         <div class="backed-inner">
           <% @project.live_periods.each do |period| %>
-            <div class="js">
-              <div class="avatar-sm mt-1 lead" title='<%= "#{period.user.full_name} - Team Lead" %>' style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : 'user.png' %>')" ></div>
+            <div class="js rel">
+              <div class="avatar-sm mt-1" title='<%= "#{period.user.full_name} - Team Lead" %>' style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : asset_path("user.png") %>')" ></div>
               <div class="period-inner">
-                <p class="elipssis">working on <%= period.title %></p>
+                <p class="elipssis"><%= period.title %></p>
                 <p class="subtext elipssis" >for the last <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
               </div>
+              <%= link_to period_path(period), class: "link" do  %>
+              <% end %>
             </div>
           <% end %>
         </div>

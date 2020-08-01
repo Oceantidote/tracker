@@ -17,7 +17,7 @@ User.destroy_all
 puts "Creating users"
 me = User.create!(first_name: "Leonard", last_name: "Percival", position: "Director", email: "leonardpercival@gmail.com", password: '123123', admin:true)
 client = User.create!(first_name: "Ariel", last_name: "Roberts", position: "Founder", email: "normal@gmail.com", password: '123123')
-User.create(admin: true, email: "ife@gmail.com", password: '123123', position: "Developer", first_name: "ife", company: "HD", last_name: "Odugbesan")
+ife = User.create(admin: true, email: "ife@gmail.com", password: '123123', position: "Developer", first_name: "ife", company: "HD", last_name: "Odugbesan")
 puts "Creating projects and lists"
 project = Project.create!(user: client, name: "Normal Project", dev_user: me)
 quoted_list = List.create!(project: project, payment_type: "qouted", name: "Quoted List")
@@ -33,4 +33,9 @@ end
 Task.first(10).each do |task|
   Period.create!(user: me, created_at: 1.day.ago, end_time: 1.hour.ago, end_note: 'example note', task: task)
 end
+Period.create!(user: ife, created_at: 1.day.ago, task: Task.first)
 Invoice.create!(project: project, total: 30, approved: true)
+Invoice.create!(project: project, total: 30, approved: true, due_by: 5.hours.from_now)
+Invoice.create!(project: project, total: 30, approved: true, due_by: 5.hour.ago)
+Invoice.create!(project: project, total: 30, approved: true, due_by: 9.day.from_now)
+
