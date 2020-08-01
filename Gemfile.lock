@@ -131,10 +131,6 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.1)
-    monetize (1.9.4)
-      money (~> 6.12)
-    money (6.13.8)
-      i18n (>= 0.6.4, <= 2)
     msgpack (1.3.3)
     nio4r (2.5.2)
     nokogiri (1.10.9)
@@ -264,7 +260,6 @@ DEPENDENCIES
   font-awesome-sass
   jbuilder (~> 2.7)
   listen (~> 3.2)
-  monetize
   pg (>= 0.18, < 2.0)
   pry-byebug
   pry-rails
