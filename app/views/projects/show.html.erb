@@ -1,11 +1,75 @@
-<div class="container">
-  <h3 class="text-center"><strong><%= @project.user.company %></strong></h3>
+<div class="top-header">
   <h1 class="text-center"><strong><%= @project.name %></strong></h1>
-  <div class="backed">
-    <div class="accordion" id="accordionExample">
-      <% @project.lists.each_with_index do |list, index| %>
-        <%= render "shared/list", list: list, index: index  %>
-      <% end %>
+  <h3 class="text-center"><strong><%= @project.user.company %></strong></h3>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="backed">
+        <h4 class="elipssis"><strong>Working live now</strong></h4>
+        <div class="backed-inner">
+          <% @project.live_periods.each do |period| %>
+            <div class="js">
+              <div class="avatar-sm mt-1 lead" title='<%= "#{period.user.full_name} - Team Lead" %>' style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : 'user.png' %>')" ></div>
+              <div class="period-inner">
+                <p class="elipssis">working on <%= period.title %></p>
+                <p class="subtext elipssis" >for the last <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="backed">
+        <h4 class="elipssis"><strong>To Dos</strong></h4>
+        <div class="backed-inner jcol">
+          <% @project.lists.each do |list| %>
+            <h5><%= link_to list.name, list_path(list), class: 'secondary' %> - <span classs="<%= 'green' if list.incomplete_tasks > 0  %>"></span>  <%= list.incomplete_tasks %></h5>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="backed">
+        <h4 class="elipssis"><strong>Campfire</strong></h4>
+        <div class="backed-inner">
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="backed">
+        <h4 class="elipssis"><strong>Paid invoices</strong></h4>
+        <div class="backed-inner">
+          <% @project.paid_invoices.each do |invoice| %>
+            <div class="sub-backed">
+              <p class='m-0'><%= 1001 + invoice.id %> - <strong>£ <%= invoice.total %></strong> paid <%= distance_of_time_in_words(invoice.due_by - Time.now) %></p>
+              <%= link_to invoice_path, class: "link" do %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="backed">
+        <h4 class="elipssis"><strong>Outstanding Invoices</strong></h4>
+        <div class="backed-inner">
+          <% @project.unpaid_invoices.each do |invoice| %>
+            <div class="sub-backed <%= invoice.color %>">
+              <p class='m-0'><%= 1001 + invoice.id %> - <strong>£ <%= invoice.total %></strong> <%= invoice.due_by > Time.now ? "due in" : "overdue by"  %> <%= distance_of_time_in_words(invoice.due_by - Time.now) %></p>
+              <%= link_to invoice_path, class: "link" do %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="backed">
+        <h4 class="elipssis"><strong>Documents</strong></h4>
+        <div class="backed-inner">
+      </div>
     </div>
   </div>
 </div>

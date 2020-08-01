@@ -1,0 +1,24 @@
+<div class="top-header">
+  <h1 class="text-center blue"><strong>You've been <%= @period.title %></strong></h1>
+  <h3 class="text-center"><strong>for <%= @period.task.list.project.user.first_name %></strong></h3>
+  <h5 class="text-center"><%= distance_of_time_in_words(@period.created_at - Time.now) %></h5>
+</div>
+<div class="container">
+  <div class="col-sm-12">
+    <div class="backed">
+      <h5>Task: <%= @period.task.name %></h5>
+      <%= simple_form_for(@period) do |f| %>
+        <%= f.error_notification %>
+        <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+        <div class="form-inputs">
+          <%= f.input :end_time %>
+          <%= f.input :end_note, as: :text %>
+        </div>
+        <div class="jc">
+          <%= f.button :submit, "Change Task", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

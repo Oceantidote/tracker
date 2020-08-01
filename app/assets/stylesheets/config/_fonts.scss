@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
 
 // Define fonts for body and headers
-$body-font: "Work Sans", "Helvetica", "sans-serif";
+$body-font: "Nunito", "Helvetica", "sans-serif";
 $headers-font: "Nunito", "Helvetica", "sans-serif";
 
 // To use a font file (.woff) uncomment following lines
@@ -14,23 +14,4 @@ $headers-font: "Nunito", "Helvetica", "sans-serif";
 //        font-url('FontFile.ttf') format('truetype')
 // }
 // $my-font: "Font Name";
-@media (max-width: 600px) {
-  h1 {
-    font-size: 2rem !important;
-  }
-  h2 {
-    font-size: 1.75rem !important;
-  }
-  h3 {
-    font-size: 1.5rem !important;
-  }
-  h4 {
-    font-size: 1.25rem !important
-  }
-  h5 {
-    font-size: 1rem !important;
-  }
-  p {
-    font-size: 0.8rem !important;
-  }
-}
+

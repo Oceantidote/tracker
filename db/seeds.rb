@@ -30,3 +30,4 @@ end
 Task.first(10).each do |task|
   Period.create!(user: me, created_at: 1.day.ago, end_time: 1.hour.ago, end_note: 'example note', task: task)
 end
+Invoice.create!(project: project, total: 30, approved: true)
