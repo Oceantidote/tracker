@@ -8,31 +8,45 @@
       <div class="col-sm-12 col-md-6">
         <div class="backed">
           <h4>Tasks assigned to you:</h4>
-          <% if @tasks.empty? %>
-            <p>Well done, it looks like you've cleared all your tasks. Go and have a beer a rest easy, knowinng you are the best developer in the company!</p>
-          <% else %>
-            <%= render 'shared/developer_tasks', tasks: @tasks %>
-          <% end %>
+          <div class="backed-inner">
+            <% if @tasks.empty? %>
+              <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you've cleared all your tasks. Go and have a beer a rest easy, knowing you are the best developer in the company!" %>
+            <% else %>
+              <%= render 'shared/developer_tasks', tasks: @tasks %>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="col-sm-12 col-md-6">
         <div class="backed">
           <h4>Tasks due soon:</h4>
-          <% if @due_tasks.empty? %>
-            <p>Well done, it looks like we are the best agency in the world! have another beer!</p>
-          <% else %>
-            <%= render 'shared/developer_tasks', tasks: @due_tasks %>
-          <% end %>
+          <div class="backed-inner">
+            <% if @due_tasks.empty? %>
+            <%= render 'shared/void', emoji: "🍻", title: "Well done!", message: "It looks like we are the best agency in the world! have another beer!" %>
+            <% else %>
+              <%= render 'shared/developer_tasks', tasks: @due_tasks %>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="col-sm-12 col-md-6">
         <div class="backed">
           <h4>Invoices needing your approval:</h4>
-          <% if @my_invoices.empty? %>
-            <p>Well done, it looks like you have approved all your invoices. You are the best accountant in the world!</p>
-          <% else %>
-            <%= render 'shared/developer_invoices', invoices: @my_invoices %>
-          <% end %>
+          <div class="backed-inner">
+            <% if @my_invoices.empty? %>
+              <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you have approved all your invoices. You are the best accountant in the world! BEER!" %>
+            <% else %>
+              <%= render 'shared/developer_invoices', invoices: @my_invoices %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div class="backed">
+          <h4>Leaderboard</h4>
+          <div class="backed-inner">
+            <h5>COMING SOON!</h5>
+          </div>
         </div>
       </div>
     </div>
