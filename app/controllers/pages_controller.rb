@@ -10,8 +10,18 @@ class PagesController < ApplicationController
   end
 
   def developer
+    @periods = Period.where(end_time: nil, user: current_user)
+    if @periods.any?
+      redirect_to period_path(@periods.first)
+    end
+    @tasks = current_user.tasks
+    @due_tasks = Task.where("completed_by < ?", 3.day.from_now)
     @invoices = Invoice.all
-    @periods = Period.where(end_time: nil)
+    @my_invoices = current_user.my_pending_invoices
     @projects = Project.includes(:tasks, :lists, :periods).where(archived: false)
+  end
+
+  def profile
+    @activity_logs = ActivityLog.where(user: current_user).where("created_at > ?", 48.hour.ago)
   end
 end

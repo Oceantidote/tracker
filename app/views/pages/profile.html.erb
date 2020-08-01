@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="rhs-cont">
+    <div class="container-fluid p15">
+      <div class="top-header">
+        <div class="jc rel">
+          <div class="rel jc">
+            <div class="profile-avatar ml-4 mr-4 m-2" style="background-image: url(<%= url_for(current_user.photo.attached? ? current_user.photo : 'user.png') %>);"></div>
+          </div>
+          <div class="ml-4 mr-4 m-0">
+            <h2 class="text-center"><strong><%= current_user.full_name %></strong> | <%= current_user.position %></h2>
+            <h4 class="blue"><strong><%= current_user.company %></strong></h4>
+          </div>
+          <% if current_user.company_logo.attached? %>
+            <div class="rel jc">
+              <%= image_tag current_user.company_logo, alt: "#{current_user.company}'s logo", class: "profile-avatar ml-4 mr-4 m-2" %>
+            </div>
+          <% end %>
+          <%= link_to edit_user_path(current_user), class: "edit-link" do %>
+            <h4><i class="fas fa-edit"></i></h4>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="backed">
+        <h5><strong>Your recent activity:</strong></h5>
+        <hr>
+        <%= render "shared/logs", logs: @activity_logs %>
+      </div>
+    </div>
+  </div>
+</div>
+

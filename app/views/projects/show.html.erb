@@ -1,15 +1,11 @@
-<div class="overall-cont">
-  <%= render "shared/lhs_nav" %>
-  <div class="rhs-cont">
-    <p id="notice"><%= notice %></p>
-    <div class="container-fluid">
-      <%= link_to 'Back', projects_path %> | <%= link_to 'Edit', edit_project_path(@project) %>
-      <h2><%= @project.name %></h2>
-      <div class="accordion" id="accordionExample">
-        <% @project.lists.each_with_index do |list, index| %>
-          <%= render "shared/list", list: list, index: index  %>
-        <% end %>
-      </div>
+<div class="container">
+  <h3 class="text-center"><strong><%= @project.user.company %></strong></h3>
+  <h1 class="text-center"><strong><%= @project.name %></strong></h1>
+  <div class="backed">
+    <div class="accordion" id="accordionExample">
+      <% @project.lists.each_with_index do |list, index| %>
+        <%= render "shared/list", list: list, index: index  %>
+      <% end %>
     </div>
   </div>
 </div>

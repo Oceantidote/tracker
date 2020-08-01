@@ -10,16 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_31_151007) do
+ActiveRecord::Schema.define(version: 2020_08_01_015643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "invoices", force: :cascade do |t|
-    t.bigint "user_id", null: false
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "activity_logs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "task_id"
+    t.bigint "list_id"
+    t.string "action"
+    t.bigint "period_id"
+    t.bigint "invoice_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_invoices_on_user_id"
+    t.index ["invoice_id"], name: "index_activity_logs_on_invoice_id"
+    t.index ["list_id"], name: "index_activity_logs_on_list_id"
+    t.index ["period_id"], name: "index_activity_logs_on_period_id"
+    t.index ["task_id"], name: "index_activity_logs_on_task_id"
+    t.index ["user_id"], name: "index_activity_logs_on_user_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "approved", default: false
+    t.index ["project_id"], name: "index_invoices_on_project_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -51,6 +89,8 @@ ActiveRecord::Schema.define(version: 2020_07_31_151007) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "archived", default: false
+    t.bigint "dev_user_id"
+    t.index ["dev_user_id"], name: "index_projects_on_dev_user_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -65,6 +105,15 @@ ActiveRecord::Schema.define(version: 2020_07_31_151007) do
     t.datetime "completed_by"
     t.boolean "completed", default: false
     t.index ["list_id"], name: "index_tasks_on_list_id"
+  end
+
+  create_table "team_memberships", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_team_memberships_on_project_id"
+    t.index ["user_id"], name: "index_team_memberships_on_user_id"
   end
 
   create_table "user_tasks", force: :cascade do |t|
@@ -85,16 +134,29 @@ ActiveRecord::Schema.define(version: 2020_07_31_151007) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "admin", default: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "company"
+    t.string "position"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "invoices", "users"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "activity_logs", "invoices"
+  add_foreign_key "activity_logs", "lists"
+  add_foreign_key "activity_logs", "periods"
+  add_foreign_key "activity_logs", "tasks"
+  add_foreign_key "activity_logs", "users"
+  add_foreign_key "invoices", "projects"
   add_foreign_key "lists", "projects"
   add_foreign_key "periods", "tasks"
   add_foreign_key "periods", "users"
   add_foreign_key "projects", "users"
+  add_foreign_key "projects", "users", column: "dev_user_id"
   add_foreign_key "tasks", "lists"
+  add_foreign_key "team_memberships", "projects"
+  add_foreign_key "team_memberships", "users"
   add_foreign_key "user_tasks", "tasks"
   add_foreign_key "user_tasks", "users"
 end

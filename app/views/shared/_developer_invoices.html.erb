@@ -1,0 +1,5 @@
+<% invoices.each do |invoice| %>
+  <%= link_to invoice_path(invoice) do  %>
+    <p><%= invoice.project.name %> - <%= invoice.project.user.full_name %></p>
+  <% end %>
+<% end %>

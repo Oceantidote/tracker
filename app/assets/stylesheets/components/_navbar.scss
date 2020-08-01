@@ -1,6 +1,7 @@
 .navbar-lewagon {
   justify-content: space-between;
   background: white;
+  padding: 0.5rem 3rem;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -8,14 +9,46 @@
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 40px;
+  width: 35px;
+  height: 35px;
 }
 .jc {
   justify-content: center;
   display: flex;
+  // width: 100%;
+  align-items: center;
+}
+.jbtwn {
+  justify-content: space-between;
+  display: flex;
   width: 100%;
+  align-items: center;
+}
+.jar {
+  justify-content: space-around;
+  display: flex;
+  width: 100%;
+  align-items: center;
 }
 .brand-logo {
   width: 60%;
   margin: 3rem auto;
+}
+.wide-btn {
+  width: 150px;
+}
+.top-header {
+  margin: 2rem 0;
+  text-align: center;
+}
+.blackbg {
+  background-color: black;
+}
+.head-link {
+  font-size: 0.8rem;
+  margin-bottom: 0;
+  margin-top: -5px;
+}
+.blue {
+  color: $blue;
 }

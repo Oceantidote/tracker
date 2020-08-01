@@ -1,0 +1,15 @@
+<ul>
+  <% logs.each do |log| %>
+    <% if log.list %>
+      <li class="log"><%= log.message(current_user) %> <%= link_to log.list.name, list_path(log.list) %> - <span class="grey"><%= log.created_at.strftime('%I:%M %a') %></span></li>
+    <% elsif log.invoice %>
+      <li class="log"><%= log.message(current_user) %> <%= link_to log.invoice.id, invoice_path(log.invoice) %> - <span class="grey"><%= log.created_at.strftime('%I:%M %a') %></span></li>
+    <% elsif log.period %>
+      <li class="log"><%= log.message(current_user) %> <%= link_to log.period.name, period_path(log.period) %> - <span class="grey"><%= log.created_at.strftime('%I:%M %a') %></span></li>
+    <% elsif log.task %>
+      <li class="log"><%= log.message(current_user) %> <%= link_to log.task.name, task_path(log.task) %> - <span class="grey"><%= log.created_at.strftime('%I:%M %a') %></span></li>
+    <% else %>
+      <li class="log"><%= log.message(current_user) %> <%= link_to log.project.name, project_path(log.project) %> - <span class="grey"><%= log.created_at.strftime('%I:%M %a') %></span></li>
+    <% end %>
+  <% end %>
+</ul>

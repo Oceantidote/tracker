@@ -12,18 +12,18 @@ Project.destroy_all
 User.destroy_all
 
 puts "Creating users"
-me = User.create!(email: "leonardpercival@gmail.com", password: '123123', admin:true)
-client = User.create!(email: "normal@gmail.com", password: '123123')
-
+me = User.create!(first_name: "Leonard", email: "leonardpercival@gmail.com", password: '123123', admin:true)
+client = User.create!(first_name: "Ariel", last_name: "Roberts", email: "normal@gmail.com", password: '123123')
+User.create(admin: true, email: "ife@gmail.com", password: '123123', first_name: "ife", company: "HD", last_name: "Odugbesan")
 puts "Creating projects and lists"
-project = Project.create!(user: client, name: "Normal Project")
+project = Project.create!(user: client, name: "Normal Project", dev_user: me)
 quoted_list = List.create!(project: project, payment_type: "qouted", name: "Quoted List")
 support_list = List.create!(project: project, payment_type: "support", name: "Support List")
 free_list = List.create!(project: project, payment_type: "free", name: "Free List")
 puts "creating tasks"
 [quoted_list, support_list, free_list].each do |list|
   5.times do
-    Task.create(list: list, name: "test task", description: "test description", completed_by: (0..4).to_a.sample > 1 ? 5.day.from_now : nil)
+    Task.create!(list: list, name: "test task", description: "test description", completed_by: (0..4).to_a.sample > 1 ? 5.day.from_now : nil)
   end
 end
 

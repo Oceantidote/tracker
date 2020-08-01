@@ -1,12 +1,40 @@
 <div class="lhs-nav">
-  <%= link_to invoices_path, class: 'nav-btn' do %>
-    <div class="btn btn-100 <%= controller_name == "invoices" ? 'btn-primary' : 'btn-secondary'  %>">
-      Invoices
+  <%= link_to invoices_path do %>
+    <div class="btn <%= controller_name == "invoices" ? 'primary' : 'secondary'  %>">
+      <div class="jcol">
+        <i class="fa fa-handshake" aria-hidden="true"></i>
+      </div>
+      <p class="head-link"><strong>invoices</strong></p>
     </div>
   <% end %>
-  <%= link_to projects_path, class: 'nav-btn' do %>
-    <div class="btn btn-100 <%= controller_name == "projects" ? 'btn-primary' : 'btn-secondary'  %>">
-      Projects
+  <%= link_to projects_path do %>
+    <div class="btn <%= controller_name == "projects" ? 'primary' : 'secondary'  %>">
+      <div class="jcol">
+        <i class="fa fa-archive" aria-hidden="true"></i>
+      </div>
+      <p class="head-link"><strong>projects</strong></p>
     </div>
   <% end %>
+  <%= link_to root_path do %>
+    <div class="btn <%= ['dashboard', 'developer'].include?(action_name) ? 'primary' : 'secondary' %>">
+      <div class="jcol">
+        <i class="fas fa-sun" aria-hidden="true"></i>
+      </div>
+      <p class="head-link"><strong>today</strong></p>
+    </div>
+  <% end %>
+  <%= link_to profile_path do %>
+    <div class="btn <%= action_name == "profile" ? 'primary' : 'secondary'  %>">
+      <div class="jcol">
+        <i class="fa fa-smile" aria-hidden="true"></i>
+      </div>
+      <p class="head-link"><strong>me</strong></p>
+    </div>
+  <% end %>
+  <div class="btn secondary">
+      <div class="jcol">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+      </div>
+      <p class="head-link"><strong>messages</strong></p>
+    </div>
 </div>
