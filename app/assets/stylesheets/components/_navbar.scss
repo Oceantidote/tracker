@@ -26,9 +26,20 @@
 .btn-primary {
   min-width: 100px;
 }
+#new_user .form-inputs .form-group {
+  // margin-bottom: 5px;
+}
+.invalid-feedback {
+  margin-bottom: -10px;
+}
 .navbar-lewagon .navbar-brand img {
   width: 35px;
   height: 35px;
+}
+.void_list {
+  p {
+    margin-bottom: 0.5rem;
+  }
 }
 .btn-tertiary {
   border: 2px solid $blue;

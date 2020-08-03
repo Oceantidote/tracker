@@ -1,21 +1,31 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
+  SOURCES = ["Google","From a friend","Via Le Wagon","From one of our happy customers"]
+
   devise :database_authenticatable, :recoverable, :rememberable, :registerable, :validatable
-  before_validation :cap_name
-  has_many :projects
-  has_many :invoices
-  has_many :periods, through: :projects
-  has_many :user_tasks
-  has_many :tasks, through: :user_tasks
-  has_many :dev_projects, :class_name => 'Project', :foreign_key => 'dev_user_id'
-  has_many :invoices, through: :dev_projects
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+
   has_many :team_memberships, dependent: :destroy
   has_many :visible_projects, through: :team_memberships, source: :project
+  has_many :dev_projects, :class_name => 'Project', :foreign_key => 'dev_user_id'
+  has_many :dev_invoices, through: :dev_projects, source: :dev_user
+  has_many :projects
+  has_many :lists, through: :projects
+  has_many :tasks, through: :lists
+  has_many :periods, through: :tasks
+  has_many :quotes
+  has_many :quote_tasks, through: :quotes
+  has_many :quoted_tasks, through: :quotes, source: :user
+  has_many :invoices, through: :projects, source: :user
+  has_many :user_tasks
+  has_many :assigned_tasks, through: :user_tasks, source: :user
+  has_many :dev_periods, through: :periods, source: :user
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
   has_one_attached :photo
   has_one_attached :company_logo
+
+  before_validation :cap_name
   before_create :set_color
 
   def busy
@@ -41,5 +51,6 @@ class User < ApplicationRecord
   def cap_name
     first_name.capitalize!
     last_name.capitalize!
+    company&.capitalize!
   end
 end

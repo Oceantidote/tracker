@@ -5,8 +5,11 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @projects = Project.includes(:tasks, :lists, :periods).where(user: current_user, archived: false)
-    @invoices = Invoice.where(user: current_user)
+    @projects = current_user.visible_projects
+    @invoices = current_user.invoices
+    @tasks = current_user.tasks.where("completed_by < ?", 3.day.from_now)
+    @quotes = current_user.quotes
+    @periods = current_user.periods.where.not(end_time: nil)
   end
 
   def developer

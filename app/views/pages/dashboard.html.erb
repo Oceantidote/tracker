@@ -1,11 +1,56 @@
 <div class="container">
   <div class="rhs-cont">
-    <h2 class="text-center mt-3">Hi <%= current_user.first_name.capitalize %>! Here's what's been happening this week.</h2>
+    <div class="top-header">
+      <h2 class="text-center"><strong>Hi <%= current_user.first_name.capitalize %>!</strong></h2>
+      <h4 class="text-center">Here's what's been important today</h4>
+      <p class="tet-center"><%= Time.now.strftime("%d%m%y %a") %></p>
+    </div>
     <div class="row">
       <div class="col-sm-12 col-md-6">
-        <h4>Here's who's been working on what this week:</h4>
-
+        <div class="backed">
+          <h4>HD Devs working live now:</h4>
+          <div class="backed-inner">
+            <% if @periods.empty? %>
+              <%= render 'shared/void', emoji: "😴", message: "Nothing to report", title: "All quiet on the western front" %>
+            <% else %>
+              <%= render 'shared/periods', periods: @periods %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div class="backed">
+          <h4>Tasks due soon:</h4>
+          <div class="backed-inner">
+            <% if @tasks.empty? %>
+            <%= render 'shared/void', emoji: "🍻", title: "Well done!", message: "It looks like we are the best agency in the world! have another beer!" %>
+            <% else %>
+              <%= render 'shared/developer_tasks', tasks: @tasks %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div class="backed">
+          <h4>Invoices needing your approval:</h4>
+          <div class="backed-inner">
+            <% if @invoices.empty? %>
+              <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you have approved all your invoices. You are the best accountant in the world! BEER!" %>
+            <% else %>
+              <%= render 'shared/developer_invoices', invoices: @invoices %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div class="backed">
+          <h4>Leaderboard</h4>
+          <div class="backed-inner">
+            <h5>COMING SOON!</h5>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+

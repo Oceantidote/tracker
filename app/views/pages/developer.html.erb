@@ -10,7 +10,7 @@
           <h4>Tasks assigned to you:</h4>
           <div class="backed-inner">
             <% if @tasks.empty? %>
-              <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you've cleared all your tasks. Go and have a beer a rest easy, knowing you are the best developer in the company!" %>
+              <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you've cleared all your tasks. Go and have a beer and rest easy, knowing you are the best developer in the company!" %>
             <% else %>
               <%= render 'shared/developer_tasks', tasks: @tasks %>
             <% end %>
