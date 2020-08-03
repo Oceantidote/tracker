@@ -16,7 +16,7 @@
             <h4 class="elipssis"><strong><%= project.name %></strong></h4>
             <h5 class="elipssis"><%= project.user.company %></h5>
             <div class="team-holder">
-              <%= render "shared/member_row", project: project, delete: false, hide_add: true %>
+              <%= render "shared/member_row", memberships: project.valid_memberships, delete: false, hide_add: true %>
             </div>
             <%= link_to project_path(project) do %>
               <div class="link"></div>

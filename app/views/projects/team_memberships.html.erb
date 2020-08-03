@@ -1,6 +1,6 @@
 <div class="top-header">
   <h2 class="text-center"><strong><%= link_to @project.name, project_path(@project), class: "secondary"  %>'s team</strong></h2>
-  <%= render "shared/member_row", project: @project, delete: false, hide_add: true %>
+  <%= render "shared/member_row", memberships: @project.valid_memberships, delete: false, hide_add: true %>
 </div>
 <div class="container">
   <div class="rhs-cont">
@@ -14,7 +14,7 @@
               <%= f.error_notification %>
               <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
               <div class="form-inputs">
-                <%= f.association :user, collection: User.where.not(first_name: nil).to_a - @project.members.to_a , prompt: "Which developer would you like to add?", label_method: :full_name, value_method: :id, include_blank: false, label: false %>
+                <%= f.association :user, collection: @project.valid_members , prompt: "Which developer would you like to add?", label_method: :full_name, value_method: :id, include_blank: false, label: false %>
               </div>
 
 
@@ -39,10 +39,10 @@
                 <%= f.button :submit, "Invite", class: "btn-primary" %>
               </div>
             <% end %>
-
-            <% unless @project.team_memberships.select {|m| m.valid?}.length == 2 %>
+            <% raise %>
+            <% if @project.deleteable_memberships.any? %>
               <h5>or remove a someone</h5>
-              <%= render "shared/member_row", project: @project, delete: true %>
+              <%= render "shared/member_row", memberships: @project.deleteable_memberships, delete: true %>
             <% end %>
 
           </div>

@@ -18,7 +18,7 @@
     <div class="form-group mt-4">
       <input type="hidden" name="task[user_ids][]" value="">
       <div class="category-choices">
-        <% list.project.members.where.not(first_name: nil).each do |user| %>
+        <% list.project.valid_members.each do |user| %>
           <label class="category-choice jca" title="<%= user.full_name %>" style="background-image: url('<%= user.photo.attached? ? url_for(user.photo) : "" %>'); background-color: <%= user.color %>">
             <p class="text-center bold"><%= user.initials if !user.photo.attached? %></p>
           </label>

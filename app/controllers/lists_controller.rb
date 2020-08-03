@@ -6,7 +6,7 @@ class ListsController < ApplicationController
   def index
 
     @project = Project.find(params[:project_id])
-    @lists = List.where(project: @project)
+    @lists = ordered_lists
     params[:task] ? @task = Task.find(params[:task]) : @task = Task.new
   end
 
@@ -63,6 +63,20 @@ class ListsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def ordered_lists
+      quoted = @project.lists.where(payment_type: 'quoted').to_a
+      support = @project.lists.where(payment_type: 'support').to_a
+      free = @project.lists.where(payment_type: 'free').to_a
+      emergency = @project.lists.where(payment_type: 'emergency').to_a
+      if current_user.accepts_promise
+        [free, quoted, support, emergency]
+      elsif emergency.length > 0
+        [emergency, quoted, support, free]
+      else
+        [quoted, support, free, emergency]
+      end
+    end
 
     def set_project
       @project = Project.find(params[:project_id])

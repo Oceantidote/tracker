@@ -1,6 +1,6 @@
 <div class="container">
   <div class="accordion" id="accordionExample">
-    <% lists.each_with_index do |list, index| %>
+    <% @lists.flatten.each_with_index do |list, index| %>
       <div class="card">
         <div class="card-header" id="list_<%= list.id %>">
           <%= render 'shared/list_line', list: list, index: index %>

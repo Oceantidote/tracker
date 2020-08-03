@@ -1,7 +1,7 @@
 <div class="top-header">
   <h1 class="text-center"><strong><%= @project.name %></strong></h1>
   <h3 class="text-center"><strong><%= @project.user.company %></strong></h3>
-  <%= render "shared/member_row", project: @project, delete: false, hide_add: false %>
+  <%= render "shared/member_row", memberships: @project.valid_memberships, delete: false, hide_add: false %>
 </div>
 <div class="container">
   <div class="row">
@@ -12,10 +12,12 @@
         <div class="backed-inner">
           <% @project.live_periods.each do |period| %>
             <div class="js rel">
-              <div class="avatar-sm mt-1" title='<%= "#{period.user.full_name} - Team Lead" %>' style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : asset_path("user.png") %>')" ></div>
+              <div class="avatar-sm mt-1" title="<%= "#{period.user.full_name} - Team Lead" %>" style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : asset_path("user.png") %>')" >
+
+              </div>
               <div class="period-inner">
-                <p class="elipssis"><%= period.title %></p>
-                <p class="subtext elipssis" >for the last <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
+                <p class="elipssis"><%= period.user.first_name %></p>
+                <p class="subtext elipssis" ><%= period.title %> for <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
               </div>
               <%= link_to period_path(period), class: "link" do  %>
               <% end %>
@@ -28,7 +30,7 @@
       <div class="backed">
         <h4 class="elipssis"><strong><%= link_to "To-dos", project_lists_path(@project), class: "secondary" %></strong>  <span style="font-size: 1.25rem;">✅</span></h4>
         <hr>
-        <div class="backed-inner jcol">
+        <div class="backed-inner">
           <% @project.lists.each do |list| %>
             <h5>
               <%= link_to list_path(list), class: 'secondary' do %>
@@ -90,4 +92,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

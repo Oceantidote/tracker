@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       patch :finish
     end
   end
+  get '/promise/', to: 'pages#promise'
   resources :invoices
   resources :users, only: [:edit, :update]
   get 'profile', to: 'pages#profile'

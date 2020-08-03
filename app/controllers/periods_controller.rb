@@ -5,7 +5,7 @@ class PeriodsController < ApplicationController
   end
 
   def create
-    @period = Period.new(period_params)
+    @period = Period.new(nested_period_params)
     @period.user = current_user
     @period.task_id = params[:task_id].to_i
     if @period.save
@@ -35,6 +35,10 @@ class PeriodsController < ApplicationController
   end
 
   private
+
+  def nested_period_params
+    params.require(:period).permit(:end_note, :title, :description, :end_time)
+  end
 
   def period_params
     params.permit(:task, :end_note, :title, :description, :end_time)

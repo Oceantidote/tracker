@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_010900) do
+ActiveRecord::Schema.define(version: 2020_08_03_103233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_010900) do
     t.boolean "paid", default: false
     t.float "total"
     t.datetime "paid_at"
-    t.datetime "due_by", default: "2020-08-10 01:06:31"
+    t.datetime "due_by", default: "2020-08-10 05:23:50"
     t.index ["project_id"], name: "index_invoices_on_project_id"
   end
 
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_010900) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "relation"
     t.string "email"
+    t.integer "priority"
     t.index ["project_id"], name: "index_team_memberships_on_project_id"
     t.index ["user_id"], name: "index_team_memberships_on_user_id"
   end
@@ -158,6 +159,8 @@ ActiveRecord::Schema.define(version: 2020_08_03_010900) do
     t.string "position"
     t.integer "hourly_rate", default: 40
     t.string "color"
+    t.boolean "accepts_terms", default: false
+    t.boolean "accepts_promise", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

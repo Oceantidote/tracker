@@ -147,8 +147,12 @@
   background-size: cover;
   border-radius: 50%;
 }
-
-
+.big-btn {
+  background-color: white;
+  color: red;
+  font-size: 2rem;
+  font-weight: bold;
+}
 .hide {
   display: none;
 }
