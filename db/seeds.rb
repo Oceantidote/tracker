@@ -10,6 +10,7 @@ Invoice.destroy_all
 TeamMembership.destroy_all
 Period.destroy_all
 Task.destroy_all
+Quote.destroy_all
 List.destroy_all
 Project.destroy_all
 User.destroy_all
@@ -22,31 +23,29 @@ client = User.create!(first_name: "Ariel", last_name: "Roberts", position: "Foun
 ife = User.create(admin: true, email: "ife@gmail.com", password: '123123', position: "Developer", first_name: "ife", company: "HD", last_name: "Odugbesan")
 ife.photo.attach(io: File.open('app/assets/images/ife.png'), filename: 'ife.png')
 ife.company_logo.attach(io: File.open('app/assets/images/logo.png'), filename: 'logo.png')
-# puts "Creating projects and lists"
-# project = Project.create!(user: client, name: "Normal Project", dev_user: me)
-# TeamMembership.create!(user: ife, project: project)
-# quoted_list = List.create!(project: project, payment_type: "quoted", name: "Quoted List")
-# support_list = List.create!(project: project, payment_type: "support", name: "Support List")
-# free_list = List.create!(project: project, payment_type: "free", name: "Free List")
-# puts "creating tasks"
-# [quoted_list, support_list, free_list].each do |list|
-#   5.times do
-#     t = Task.create!(
-#       list: list,
-#       length: (1..120).to_a.sample,
-#       name: "Improve SEO",
-#       description: "test description",
-#       completed_by: (0..4).to_a.sample > 1 ? 5.day.from_now : nil
-#     )
-#     Period.create!(user: ife, created_at: 1.day.ago, task: t, end_time: 1.day.ago, title: "tweaking breakpoints")
-#     Period.create!(user: me, created_at: 1.day.ago, task: t, end_time: 1.day.ago, title: "tweaking breakpoints")
-#   end
-# end
+puts "Creating projects and lists"
+project = Project.create!(user: client, name: "Normal Project", dev_user: me)
+TeamMembership.create!(user: ife, project: project)
 
-# Period.create!(user: me, created_at: 1.day.ago, task: Task.first, title: "tweaking breakpoints")
-# Period.create!(user: ife, created_at: 1.day.ago, task: Task.first, title: "tweaking breakpoints")
-# Invoice.create!(project: project, total: 30, approved: true)
-# Invoice.create!(project: project, total: 30, approved: true, due_by: 5.hours.from_now)
-# Invoice.create!(project: project, total: 30, approved: true, due_by: 5.hour.ago)
-# Invoice.create!(project: project, total: 30, approved: true, due_by: 9.day.from_now)
+puts "creating tasks"
+
+
+5.times do
+  t = Task.create!(
+    list: project.lists.to_a.sample,
+    length: (1..120).to_a.sample,
+    name: "Improve SEO",
+    description: "test description",
+    completed_by: (0..4).to_a.sample > 1 ? 5.day.from_now : nil
+  )
+  Period.create!(user: ife, created_at: 1.day.ago, task: t, end_time: 1.day.ago, title: "tweaking breakpoints")
+  Period.create!(user: me, created_at: 1.day.ago, task: t, end_time: 1.day.ago, title: "tweaking breakpoints")
+end
+
+Period.create!(user: me, created_at: 1.day.ago, task: Task.first, title: "tweaking breakpoints")
+Period.create!(user: ife, created_at: 1.day.ago, task: Task.first, title: "tweaking breakpoints")
+Invoice.create!(project: project, total: 30, approved: true)
+Invoice.create!(project: project, total: 30, approved: true, due_by: 5.hours.from_now)
+Invoice.create!(project: project, total: 30, approved: true, due_by: 5.hour.ago)
+Invoice.create!(project: project, total: 30, approved: true, due_by: 9.day.from_now)
 

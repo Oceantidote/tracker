@@ -1,0 +1,57 @@
+
+<%= simple_form_for [list, Task.new], html: { id: "task_form_#{list.id}", class: "task-form mt-2" }, remote: true do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <h4 class="blue">Add a new task</h4>
+    <hr>
+
+    <%= f.input :name, placeholder: "Let's give this task a name", input_html: {id: "name_#{list.id}" }, label: false %>
+    <%= f.input :description, placeholder: "Perhaps a brief description too...", label: false %>
+    <div class="js">
+      <input type="date" class="form-control w50" id= "completed_by" name="task[completed_by]" label= "completed_by">
+      <p class="mb-0 w50 pl-2">Needs to be completed by?</p>
+    </div>
+
+    <!-- ASSIGN TEAM MEMBERS -->
+    <div class="form-group mt-4">
+      <input type="hidden" name="task[user_ids][]" value="">
+      <div class="category-choices">
+        <% list.project.members.where.not(first_name: nil).each do |user| %>
+          <label class="category-choice jca" title="<%= user.full_name %>" style="background-image: url('<%= user.photo.attached? ? url_for(user.photo) : "" %>'); background-color: <%= user.color %>">
+            <p class="text-center bold"><%= user.initials if !user.photo.attached? %></p>
+          </label>
+          <input type="checkbox" class="hdchekbox mr-2" value="<%= user.id %>" name="task[user_ids][]" id="task_user_ids_<%= user.id %>">
+        <% end %>
+        <p>Assign this task to any users?<p>
+       </div>
+    </div>
+
+  </div>
+
+  <div class="jc mt-4">
+    <%= f.button :submit, class: 'btn btn-primary', id: "confirm_#{list.id}" %>
+    <div class="btn btn-tertiary ml-2" id="hide_task_<%= list.id %>">
+      Cancel
+    </div>
+  </div>
+<% end %>
+<div class="btn btn-tertiary showme mb-2" id="new_task_<%= list.id %>">Add task</div>
+<script>
+  document.getElementById('new_task_<%= list.id %>').addEventListener('click', (e) => {
+    document.getElementById('task_form_<%= list.id %>').classList.add('high')
+    e.target.classList.add('hide')
+  })
+  document.getElementById('hide_task_<%= list.id %>').addEventListener('click', (e) => {
+    document.getElementById('task_form_<%= list.id %>').classList.remove('high')
+    document.getElementById('new_task_<%= list.id %>').classList.remove('hide')
+  })
+  document.getElementById('confirm_<%= list.id %>').addEventListener('click', (e) => {
+    if (document.getElementById('name_<%= list.id %>').value == "") {
+      e.preventDefault()
+      document.getElementById('name_<%= list.id %>').classList.add("shake")
+      setTimeout(function(){ document.getElementById('name_<%= list.id %>').classList.remove("shake"); }, 1000);
+    }
+  })
+</script>

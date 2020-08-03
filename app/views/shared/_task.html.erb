@@ -1,26 +1,73 @@
-<div class="card">
+<div class="card pt-2">
   <div class="card-header task-header" id="task_<%= task.id %>">
-    <h2 class="mb-0">
-      <button class="btn btn-link btn-block text-left <%= 'collapsed' unless index == 0  %>" type="button" data-toggle="collapse" data-target="#collapse_task_<%= task.id %>" aria-expanded="<%= index == 0 ? true : false %>" aria-controls="collapse_task_<%= task.id %>">
+    <div class="js as wrap pb-2">
+      <%= link_to "✅", complete_list_task_path(task.list, task), class: "complete" %>
+      <h4 class="secondary  ml-2 mb-0 <%= 'collapsed' unless index == 0  %>" data-toggle="collapse" data-target="#collapse_task_<%= task.id %>" aria-expanded="<%= index == 0 ? true : false %>" aria-controls="collapse_task_<%= task.id %>">
         <%= task.name %>
-      </button>
-    </h2>
-  </div>
+      </h4>
+      <%= render "shared/assignees_row", users: task.users %>
+      <%= render "shared/task_info", task: task %>
+      <% if current_user.admin %>
+        <div class="btn green" id="start_<%= task.id %>">Start Task</div>
+        <div class="btn red hide ml-2" id="cancel_<%= task.id %>">Cancel</div>
+        <%= simple_form_for [task, Period.new], html: { class: "period-form", id: "period_form_#{task.id}" } do |f| %>
+          <%= f.input :title, placeholder: "I will be ....", input_html: { id: "title_#{task.id}"}, label: false %>
+          <%= f.input :description, label: false, placeholder: "I might feel like adding more detail, but I don't have to" %>
+          <%= f.button :submit, "GO", class: 'btn btn-primary mt-2', id: "confirm_#{task.id}" %>
+        <% end %>
+      <% end %>
+    </div>
 
-  <div id="collapse_task_<%= task.id %>" class="collapse <%= 'show' if index == 0  %>" aria-labelledby="headingOne" data-parent="#listAccordionExample_<%= task.list.id %>">
+  </div>
+  <% if current_user.admin %>
+
+  <% end %>
+  <div id="collapse_task_<%= task.id %>" class="collapse collapse_task <%= 'show' if index == 0  %>" aria-labelledby="headingOne" data-parent="#task_<%= task.id %>">
     <div class="card-body">
-      <div class="accordion" id="taskAccordionExample_<%= task.id %>">
-        <% in_progress = task.periods.where(end_time: nil) %>
-        <% if in_progress.any? %>
-          <% task.periods.where(end_time: nil).each_with_index do |period| %>
-            <%= render "shared/period", period: period %>
+      <p><%= task.description %></p>
+      <% if task.periods.any? %>
+        <div class="accordion" id="taskAccordionExample_<%= task.id %>">
+          <% in_progress = task.periods.where(end_time: nil) %>
+          <% if in_progress.any? %>
+            <% task.periods.where(end_time: nil).each_with_index do |period| %>
+              <%= render "shared/period", period: period %>
+            <% end %>
           <% end %>
-        <% end %>
-        <h5>Completed</h5>
-        <% task.periods.where.not(end_time: nil).order(end_time: :desc).each_with_index do |period, index| %>
-          <%= render "shared/complete_period", period: period, index: index %>
-        <% end %>
-      </div>
+          <% task.periods.where.not(end_time: nil).order(end_time: :desc).each_with_index do |period, index| %>
+            <%= render "shared/complete_period", period: period, index: index %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById('start_<%= task.id %>').addEventListener('click', (e) => {
+    document.getElementById('title_<%= task.id %>').select()
+    document.getElementById('period_form_<%= task.id %>').classList.add('low')
+    e.target.classList.add('hide')
+    document.getElementById('cancel_<%= task.id %>').classList.remove('hide')
+  })
+  document.getElementById('cancel_<%= task.id %>').addEventListener('click', (e) => {
+    document.getElementById('period_form_<%= task.id %>').classList.remove('low')
+    document.getElementById('start_<%= task.id %>').classList.remove('hide')
+    e.target.classList.add("hide")
+  })
+  document.getElementById('period_form_<%= task.id %>').addEventListener('submit', (e) => {
+    if (document.getElementById('title_<%= task.id %>').value == "") {
+      e.preventDefault()
+      document.getElementById('title_<%= task.id %>').classList.add("shake")
+      setTimeout(function(){ document.getElementById('title_<%= task.id %>').classList.remove("shake"); }, 1000);
+    }
+  })
+  document.getElementById('title_<%= task.id %>').addEventListener('keyup', (e) => {
+    if (e.target.value != "") {
+      document.getElementById('confirm_<%= task.id %>').disabled = false
+    } else {
+      document.getElementById('title_<%= task.id %>').placeholder = 'e.g. "debugging users show" or "fixing  the users controller"'
+    }
+  })
+</script>
+
+

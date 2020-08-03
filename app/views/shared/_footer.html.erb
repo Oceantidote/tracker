@@ -1,0 +1,13 @@
+
+<% if @current_period %>
+  <div class="footer jc al">
+    <% if @current_period == @period %>
+      <h1 class="text-center green"><strong>Your'e right where you need to be 😆 Time to start 🏃‍♂️⌨️🏋🏻 ⌨️ 💻 🤪 and get 🤑 💸 💵 💰 💎 </strong></h1>
+    <% else %>
+      <%= link_to period_path(@current_period) do %>
+        <h1 class="text-center red"><strong>You are currently on the ⏰, for <%= @current_period.task.list.project.user.first_name %> <%= @current_period.title %></strong> 🏃‍♂️</h1>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+

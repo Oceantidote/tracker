@@ -1,0 +1,28 @@
+
+<div class="card pt-2">
+  <div class="card-header task-header" id="task_<%= task.id %>">
+    <div class="js">
+      <%= link_to "✅", uncomplete_list_task_path(task.list, task), class: "uncomplete" %>
+      <h5 class="secondary ml-2 mb-0 collapsed" data-toggle="collapse" data-target="#collapse_task_<%= task.id %>" aria-expanded="false" aria-controls="collapse_task_<%= task.id %>">
+        <%= task.name %>
+      </h5>
+    </div>
+  </div>
+
+  <div id="collapse_task_<%= task.id %>" class="collapse collapse_task" aria-labelledby="headingOne" data-parent="#listAccordionExample_<%= task.list.id %>">
+    <div class="card-body">
+      <div class="accordion" id="taskAccordionExample_<%= task.id %>">
+        <% in_progress = task.periods.where(end_time: nil) %>
+        <% if in_progress.any? %>
+          <% task.periods.where(end_time: nil).each_with_index do |period| %>
+            <%= render "shared/period", period: period %>
+          <% end %>
+        <% end %>
+        <h5>Completed</h5>
+        <% task.periods.where.not(end_time: nil).order(end_time: :desc).each_with_index do |period, index| %>
+          <%= render "shared/complete_period", period: period, index: index %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

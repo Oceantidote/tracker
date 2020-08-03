@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :uncomplete, :complete]
+  before_action :set_list, only: [:create]
 
   # GET /tasks
   # GET /tasks.json
@@ -21,19 +22,37 @@ class TasksController < ApplicationController
   def edit
   end
 
+  def complete
+    @task.update(completed: true, completed_at: Time.now)
+    respond_to do |format|
+      format.html { redirect_to project_lists_path(@task.list.project)}
+      # format.js
+    end
+  end
+
+  def uncomplete
+    @task.update(completed: false, completed_at: nil)
+    respond_to do |format|
+      format.html { redirect_to project_lists_path(@task.list.project)}
+      # format.js
+    end
+  end
+
   # POST /tasks
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+    @task.list = @list
+    @tasks = @list.tasks
+    if @task.save
+      params[:task][:user_ids].reject{|r| r == ""}.each do |id|
+        UserTask.create(task: @task, user_id: id.to_i)
       end
+      redirect_to project_lists_path(@project)
+      flash[:notice] =  'Task was successfully created.'
+    else
+      redirect_to project_lists_path(@project)
+      flash[:notice] =  'Please give your task a name at least'
     end
   end
 
@@ -62,13 +81,17 @@ class TasksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_list
+    @list = List.find(params[:list_id])
+    @project = @list.project
+  end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:list_id, :name, :description)
-    end
+  # Only allow a list of trusted parameters through.
+  def task_params
+    params.require(:task).permit(:list_id, :name, :description, :completed_by, :completed, :length, :price, :user_ids)
+  end
 end

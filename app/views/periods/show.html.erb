@@ -7,16 +7,17 @@
     <div class="backed">
       <h5>Task: <%= @period.task.name %></h5>
       <% if !@period.end_time && @period.user == current_user %>
-        <%= simple_form_for(@period) do |f| %>
+        <%= simple_form_for (@current_period) do |f| %>
           <%= f.error_notification %>
           <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-          <div class="form-inputs">
-            <%= f.input :end_time %>
-            <%= f.input :end_note, as: :text %>
-          </div>
+          <% if @are_you_sure %>
+            <div class="form-inputs">
+              <%= f.input :end_time %>
+              <%= f.input :end_note, as: :text %>
+            </div>
+          <% end %>
           <div class="jc">
-            <%= f.button :submit, "Change Task", class: 'btn btn-primary' %>
+            <%= f.button :submit, "Stop Session", class: 'btn btn-primary' %>
           </div>
         <% end %>
       <% end %>

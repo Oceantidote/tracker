@@ -1,6 +1,7 @@
 class Period < ApplicationRecord
   belongs_to :user
   belongs_to :task
+  validates :title, presence: true
 
   def length
     if end_time.nil?
@@ -8,7 +9,7 @@ class Period < ApplicationRecord
     else
       elapsed = (end_time - created_at) / 60.to_f
     end
-    (elapsed / 5).ceil * 5
+    (elapsed / 5).ceil * 1
   end
 
   def total

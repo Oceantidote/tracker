@@ -3,7 +3,23 @@
   background: white;
   padding: 0.5rem 3rem;
 }
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
 
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
 }
@@ -14,11 +30,127 @@
   width: 35px;
   height: 35px;
 }
+.btn-tertiary {
+  border: 2px solid $blue;
+  background-color: transparent;
+  color: $blue;
+  &:hover {
+    border: 2px solid $green;
+    background-color: white;
+    color: $green;
+  }
+}
+.no-br {
+  border-radius: 0 !important;
+}
+.small-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.complete {
+  min-width: 30px;
+  padding: 2px 0px 0px 5px;
+  border: 2px solid $grey-semi;
+  border-radius: 4px;
+  color: transparent;
+  &:hover {
+    color: black;
+    text-decoration: none !important;
+  }
+}
+.w50 {
+  width: 50%;
+}
+.fe {
+  display: flex;
+  justify-content: flex-end;
+}
+.uncomplete {
+  min-width: 30px;
+  padding: 2px 5px 0px 0px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  color: black;
+}
 .jc {
   justify-content: center;
   display: flex;
   // width: 100%;
   align-items: center;
+}
+.jca {
+  justify-content: center;
+  display: flex;
+  // width: 100%;
+  align-items: center;
+}
+.shake {
+  background-color: $yellowbg;
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+}
+.bold {
+  font-weight: bold;
+}
+.task-form {
+  background-color: transparent;
+  height: 0px;
+  overflow: scroll;
+  transition: 0.25s;
+  border-radius: 8px;
+}
+.high {
+  border: 2px solid #8BBFDC;
+  padding: 2rem;
+  transition: 0.5s;
+  height: 460px;
+  margin-bottom: 2rem;
+}
+.period-form {
+  background-color: transparent;
+  height: 0px;
+  overflow: scroll;
+  transition: 0.15s;
+  border-radius: 8px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.period-form::-webkit-scrollbar {
+  display: none;
+}
+.as {
+  align-items: flex-start;
+}
+.low {
+  flex: 1 0 auto;
+  transition: 0.25s;
+  height: 200px;
+}
+.card-body {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.category-choices {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.hdchekbox {
+  z-index: 2;
+}
+.category-choice {
+  color: white;
+  margin-right: -10px;
+  z-index: 0;
+  height: 30px;
+  width: 30px;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+
+.hide {
+  display: none;
 }
 .jcst {
   justify-content: center;
@@ -31,10 +163,29 @@
   justify-content: center;
 }
 .form-control {
-  border-radius: 4px;
+  border-radius: 8px;
 }
 .btn {
   border-radius: 19px;
+}
+.flex {
+  display: flex;
+  flex: 1 0 auto;
+}
+.card-header {
+  background-color: transparent;
+  border-radius: 8px;
+  border: none;
+}
+.list-title {
+  display: flex;
+  flex: 1 0 auto;
+}
+.card {
+  border-radius: 8px;
+  background-color: transparent;
+  border: none;
+
 }
 .line-link {
   background-color: white;
@@ -48,15 +199,40 @@
   align-items: center;
   text-decoration: none !important;
 }
+.list-line-link {
+  background-color: $green;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  min-width: 30px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none !important;
+  i {
+    color: white;
+  }
+}
+.p-0-2 {
+  padding: 0 2rem;
+}
 .member-link {
   height: 35px;
   width: 35px;
 }
+
 .line {
   margin: 0 10px;
   width: calc(100% - 88px);
   height: 16px;
   border-bottom: 2px solid $blue;
+}
+.green-line {
+  border-bottom: 2px solid $light-blue-hover;
+}
+.wrap {
+  flex-wrap: wrap;
 }
 .jbtwn {
   justify-content: space-between;
@@ -93,3 +269,16 @@
 .blue {
   color: $blue;
 }
+.collapse_task {
+  margin-left: 2rem;
+}
+.lh-29 {
+  line-height: 29px;
+}
+.target {
+  font-size: 23px;
+}
+
+
+
+

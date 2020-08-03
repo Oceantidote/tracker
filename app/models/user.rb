@@ -16,12 +16,26 @@ class User < ApplicationRecord
   has_many :visible_projects, through: :team_memberships, source: :project
   has_one_attached :photo
   has_one_attached :company_logo
+  before_create :set_color
+
+  def busy
+    Period.where(user: current_user, end_time: nil)
+  end
+
+  def set_color
+    color = "#" + Random.bytes(3).unpack1('H*')
+  end
+
   def my_pending_invoices
     invoices.where(approved: false)
   end
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def initials
+    first_name[0].upcase + last_name[0]&.upcase
   end
 
   def cap_name

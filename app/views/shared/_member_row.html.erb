@@ -1,14 +1,18 @@
-<div class="jc">
+<div class="<%= delete ? 'js' : 'jc' %>">
   <% project.team_memberships.each do |membership| %>
     <% if membership.user.first_name %>
       <% if delete %>
         <% unless ['client','lead'].include?(membership.relation) %>
-          <%= link_to team_membership_url(membership), method: :delete, data: { confirm: "Are you sure you want to remove #{membership.user.first_name}" } do %>
-            <div class="avatar-sm <%= membership.relation %>" title='<%= "Remove #{membership.user.full_name}? 😥" %>' style="background-image: url('<%= membership.user.photo.attached? ? url_for(membership.user.photo) : asset_path('user.png') %>')" ></div>
+          <%= link_to team_membership_url(membership), method: :delete, class: "nodec", data: { confirm: "Are you sure you want to remove #{membership.user.first_name}" } do %>
+            <div class="avatar-sm <%= membership.relation %>" title='<%= "Remove #{membership.user.full_name}? 😥" %>' style="background-image: url('<%= membership.user.photo.attached? ? url_for(membership.user.photo) : "" %>'); background-color: <%= membership.user.color %>" >
+              <p class="text-center bold"><%= membership.user.initials if !membership.user.photo.attached? %></p>
+            </div>
           <% end %>
         <% end %>
       <% else %>
-        <div class="avatar-sm <%= membership.relation %>" title='<%= "#{membership.user.full_name} - #{membership.pretty_relation}" %>' style="background-image: url('<%= membership.user.photo.attached? ? url_for(membership.user.photo) : asset_path('user.png') %>')" ></div>
+        <div class="avatar-sm <%= membership.relation %>" title='<%= "#{membership.user.full_name} - #{membership.pretty_relation}" %>' style="background-image: url('<%= membership.user.photo.attached? ? url_for(membership.user.photo) : "" %>'); background-color: <%= membership.user.color %>" >
+          <p class="text-center bold"><%= membership.user.initials if !membership.user.photo.attached? %></p>
+        </div>
       <% end %>
     <% end %>
   <% end %>

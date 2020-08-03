@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_01_202210) do
+ActiveRecord::Schema.define(version: 2020_08_03_010900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_08_01_202210) do
     t.boolean "paid", default: false
     t.float "total"
     t.datetime "paid_at"
-    t.datetime "due_by", default: "2020-08-08 13:42:57"
+    t.datetime "due_by", default: "2020-08-10 01:06:31"
     t.index ["project_id"], name: "index_invoices_on_project_id"
   end
 
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2020_08_01_202210) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "payment_type"
+    t.string "description"
     t.index ["project_id"], name: "index_lists_on_project_id"
   end
 
@@ -98,6 +99,13 @@ ActiveRecord::Schema.define(version: 2020_08_01_202210) do
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
+  create_table "quotes", force: :cascade do |t|
+    t.string "status"
+    t.integer "total"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.bigint "list_id", null: false
     t.string "name"
@@ -109,7 +117,10 @@ ActiveRecord::Schema.define(version: 2020_08_01_202210) do
     t.datetime "completed_by"
     t.boolean "completed", default: false
     t.integer "length"
+    t.datetime "completed_at"
+    t.bigint "quote_id"
     t.index ["list_id"], name: "index_tasks_on_list_id"
+    t.index ["quote_id"], name: "index_tasks_on_quote_id"
   end
 
   create_table "team_memberships", force: :cascade do |t|
@@ -146,6 +157,7 @@ ActiveRecord::Schema.define(version: 2020_08_01_202210) do
     t.string "company"
     t.string "position"
     t.integer "hourly_rate", default: 40
+    t.string "color"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -163,6 +175,7 @@ ActiveRecord::Schema.define(version: 2020_08_01_202210) do
   add_foreign_key "projects", "users"
   add_foreign_key "projects", "users", column: "dev_user_id"
   add_foreign_key "tasks", "lists"
+  add_foreign_key "tasks", "quotes"
   add_foreign_key "team_memberships", "projects"
   add_foreign_key "team_memberships", "users"
   add_foreign_key "user_tasks", "tasks"

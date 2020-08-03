@@ -26,6 +26,7 @@
   }
 }
 .secondary {
+  cursor: pointer;
   color: $gray;
   &:hover {
     text-decoration: none !important;

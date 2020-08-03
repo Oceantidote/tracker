@@ -12,7 +12,7 @@
           </div>
           <% if current_user.company_logo.attached? %>
             <div class="rel jc">
-              <%= image_tag current_user.company_logo, alt: "#{current_user.company}'s logo", class: "profile-avatar ml-4 mr-4 m-2" %>
+              <%= image_tag current_user.company_logo, alt: "#{current_user.company}'s logo", class: "company-large-avatar ml-4 mr-4 m-2" %>
             </div>
           <% end %>
           <%= link_to edit_user_path(current_user), class: "edit-link" do %>

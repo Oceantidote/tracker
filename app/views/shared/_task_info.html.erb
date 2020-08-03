@@ -1,0 +1,18 @@
+<% if task.payment_type == "quoted" %>
+  <div class="sub-hold">
+    <p class="ml-2 mb-0">
+      <% if task.quote&.accepted %>
+        <span class="<%= task.length < task.total_length ? 'red' : 'green' %>">
+          <%= task.readable_length(task.total_length) %>
+        </span>
+        <span class="target">🎯</span>
+        <%= task.readable_length(task.total_length) %>
+      <% elsif task.quote %>
+
+      <% end %>
+    </p>
+  </div>
+<% elsif task.payment_type == "free" %>
+<% elsif task.payment_type == "emergency" %>
+<% elsif task.payment_type == "support" %>
+<% end %>

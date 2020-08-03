@@ -26,17 +26,19 @@
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4">
       <div class="backed">
-        <h4 class="elipssis"><strong><%= link_to "To Dos", project_lists_path(@project), class: "secondary" %></strong>  <span style="font-size: 1.25rem;">✅</span></h4>
+        <h4 class="elipssis"><strong><%= link_to "To-dos", project_lists_path(@project), class: "secondary" %></strong>  <span style="font-size: 1.25rem;">✅</span></h4>
         <hr>
         <div class="backed-inner jcol">
           <% @project.lists.each do |list| %>
-            <h5><%= link_to list.name, list_path(list), class: 'secondary' %>
-               - <span class="<%= 'green' if list.incomplete_tasks.length == 0  %>">
-                (<%= list.tasks.length - list.incomplete_tasks.length %>/<%= list.tasks.length %>)
-                <% if list.incomplete_tasks.length == 0 %>
-                  <i class="fa fa-check-square"></i>
-                <% end %>
-              </span>
+            <h5>
+              <%= link_to list_path(list), class: 'secondary' do %>
+                 <span class="<%= 'green' if list.incomplete_tasks.length == 0  %>"><%= list.name %>
+                  (<%= list.tasks.length - list.incomplete_tasks.length %>/<%= list.tasks.length %>)
+                  <% if list.incomplete_tasks.length == 0 %>
+                    <i class="fa fa-check-square"></i>
+                  <% end %>
+                </span>
+              <% end %>
             </h5>
           <% end %>
         </div>

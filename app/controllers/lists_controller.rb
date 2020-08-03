@@ -1,11 +1,13 @@
 class ListsController < ApplicationController
   before_action :set_list, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_project, only: [:new, :create]
   # GET /lists
   # GET /lists.json
   def index
+
     @project = Project.find(params[:project_id])
     @lists = List.where(project: @project)
+    params[:task] ? @task = Task.find(params[:task]) : @task = Task.new
   end
 
   # GET /lists/1
@@ -15,7 +17,7 @@ class ListsController < ApplicationController
 
   # GET /lists/new
   def new
-    @list = List.new
+
   end
 
   # GET /lists/1/edit
@@ -26,15 +28,12 @@ class ListsController < ApplicationController
   # POST /lists.json
   def create
     @list = List.new(list_params)
-
-    respond_to do |format|
-      if @list.save
-        format.html { redirect_to @list, notice: 'List was successfully created.' }
-        format.json { render :show, status: :created, location: @list }
-      else
-        format.html { render :new }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
-      end
+    @list.project = @project
+    if @list.save
+      redirect_to project_lists_path(@project, @list)
+      flash[:notice] = 'List was successfully created.'
+    else
+      render :new
     end
   end
 
@@ -64,12 +63,17 @@ class ListsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def set_project
+      @project = Project.find(params[:project_id])
+    end
+
     def set_list
       @list = List.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def list_params
-      params.require(:list).permit(:project_id, :name)
+      params.require(:list).permit(:project_id, :name, :payment_type, :description)
     end
 end
