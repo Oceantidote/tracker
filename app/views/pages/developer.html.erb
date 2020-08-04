@@ -7,19 +7,19 @@
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <div class="backed">
-          <h4>Tasks assigned to you:</h4>
+          <h4><strong>Tasks assigned to you:</strong></h4>
           <div class="backed-inner">
-            <% if @tasks.empty? %>
+            <% if @assigned_tasks.empty? %>
               <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you've cleared all your tasks. Go and have a beer and rest easy, knowing you are the best developer in the company!" %>
             <% else %>
-              <%= render 'shared/developer_tasks', tasks: @tasks %>
+              <%= render 'shared/developer_tasks', tasks: @assigned_tasks %>
             <% end %>
           </div>
         </div>
       </div>
       <div class="col-sm-12 col-md-6">
         <div class="backed">
-          <h4>Tasks due soon:</h4>
+          <h4><strong>Tasks due soon:</strong></h4>
           <div class="backed-inner">
             <% if @due_tasks.empty? %>
             <%= render 'shared/void', emoji: "🍻", title: "Well done!", message: "It looks like we are the best agency in the world! have another beer!" %>
@@ -31,11 +31,12 @@
       </div>
       <div class="col-sm-12 col-md-6">
         <div class="backed">
-          <h4>Invoices needing your approval:</h4>
+          <h4><strong>Invoices needing your approval:</strong></h4>
           <div class="backed-inner">
             <% if @my_invoices.empty? %>
               <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you have approved all your invoices. You are the best accountant in the world! BEER!" %>
             <% else %>
+              <% @my_invoices %>
               <%= render 'shared/developer_invoices', invoices: @my_invoices %>
             <% end %>
           </div>
@@ -43,9 +44,11 @@
       </div>
       <div class="col-sm-12 col-md-6">
         <div class="backed">
-          <h4>Leaderboard</h4>
+          <h4><strong>Leaderboard</strong></h4>
           <div class="backed-inner">
-            <h5>COMING SOON!</h5>
+            <% @admin_users.each do |user| %>
+              <%= render "shared/leaderboard_row", user: user %>
+            <% end %>
           </div>
         </div>
       </div>

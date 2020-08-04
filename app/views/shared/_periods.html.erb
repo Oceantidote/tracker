@@ -1,3 +1,13 @@
 <% periods.each do |period| %>
-  <p>period here</p>
+  <div class="js rel">
+    <div class="avatar-sm mt-1" title="<%= "#{period.user.full_name} - Team Lead" %>" style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : asset_path("user.png") %>')" >
+
+    </div>
+    <div class="period-inner">
+      <p class="elipssis"><%= period.user.first_name %></p>
+      <p class="subtext elipssis" ><%= period.title %> for <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
+    </div>
+    <%= link_to period_path(period), class: "link" do  %>
+    <% end %>
+  </div>
 <% end %>

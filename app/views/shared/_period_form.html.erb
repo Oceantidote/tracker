@@ -1,0 +1,36 @@
+<div class="btn green" id="start_<%= task.id %>">Start Task</div>
+<div class="btn red hide ml-2" id="cancel_<%= task.id %>">Cancel</div>
+<%= simple_form_for [task, Period.new], html: { class: "period-form", id: "period_form_#{task.id}" } do |f| %>
+  <%= f.input :title, placeholder: "I will be ....", input_html: { id: "title_#{task.id}"}, label: false %>
+  <%= f.input :description, label: false, placeholder: "I might feel like adding more detail, but I don't have to" %>
+  <%= f.button :submit, "GO", class: 'btn btn-primary mt-2', id: "confirm_#{task.id}" %>
+<% end %>
+
+
+<script>
+  document.getElementById('start_<%= task.id %>').addEventListener('click', (e) => {
+    document.getElementById('title_<%= task.id %>').select()
+    document.getElementById('period_form_<%= task.id %>').classList.add('low')
+    e.target.classList.add('hide')
+    document.getElementById('cancel_<%= task.id %>').classList.remove('hide')
+  })
+  document.getElementById('cancel_<%= task.id %>').addEventListener('click', (e) => {
+    document.getElementById('period_form_<%= task.id %>').classList.remove('low')
+    document.getElementById('start_<%= task.id %>').classList.remove('hide')
+    e.target.classList.add("hide")
+  })
+  document.getElementById('period_form_<%= task.id %>').addEventListener('submit', (e) => {
+    if (document.getElementById('title_<%= task.id %>').value == "") {
+      e.preventDefault()
+      document.getElementById('title_<%= task.id %>').classList.add("shake")
+      setTimeout(function(){ document.getElementById('title_<%= task.id %>').classList.remove("shake"); }, 1000);
+    }
+  })
+  document.getElementById('title_<%= task.id %>').addEventListener('keyup', (e) => {
+    if (e.target.value != "") {
+      document.getElementById('confirm_<%= task.id %>').disabled = false
+    } else {
+      document.getElementById('title_<%= task.id %>').placeholder = 'e.g. "debugging users show" or "fixing  the users controller"'
+    }
+  })
+</script>

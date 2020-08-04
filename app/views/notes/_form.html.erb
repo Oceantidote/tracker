@@ -1,0 +1,16 @@
+<%= simple_form_for Note.new do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= f.input :noteable, :as => :hidden, type: :integer, :input_html => { :value => noteable.id } %>
+  <%= f.input :noteable_type, :as => :hidden, :input_html => { :value => noteable.class } %>
+  <div class="form-inputs">
+    <input id="<%= noteable.id %>_note" type="hidden" name="content">
+    <trix-editor class="trix-content" input=":content"></trix-editor>
+  </div>
+
+
+
+  <div class="jc">
+    <%= f.button :submit, class: 'btn btn-primary' %>
+  </div>
+<% end %>

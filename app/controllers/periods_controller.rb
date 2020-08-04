@@ -13,7 +13,7 @@ class PeriodsController < ApplicationController
       redirect_to period_path(@period)
       flash[:notice] = "Nice! The time is you started work on #{ @period.task.name + Time.now.strftime("%I:%M %a")}"
     else
-      raise
+      redirect_to :back
     end
   end
 

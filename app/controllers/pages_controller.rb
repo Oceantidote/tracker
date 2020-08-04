@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @projects = current_user.visible_projects
+    @projects = current_user.member_projects
     @invoices = current_user.invoices
     @tasks = current_user.tasks.where("completed_by < ?", 3.day.from_now)
     @quotes = current_user.quotes
@@ -13,15 +13,12 @@ class PagesController < ApplicationController
   end
 
   def developer
-    @periods = Period.where(end_time: nil, user: current_user)
-    if @periods.any?
-      redirect_to period_path(@periods.first)
-    end
-    @tasks = current_user.tasks
-    @due_tasks = Task.where("completed_by < ?", 3.day.from_now)
-    @invoices = Invoice.all
-    @my_invoices = current_user.my_pending_invoices
-    @projects = Project.includes(:tasks, :lists, :periods).where(archived: false)
+    @admin_users = User.where(admin: true)
+    redirect_to period_path(@current_period) if @current_period
+    @assigned_tasks = current_user.assigned_tasks
+    @due_tasks = current_user.member_tasks.order(completed_by: :asc)
+    @dev_periods = current_user.periods
+    @my_invoices = current_user.dev_invoices
   end
 
   def profile

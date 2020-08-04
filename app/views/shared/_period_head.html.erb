@@ -14,6 +14,6 @@
       <h1 class="text-center blue"><strong>has been <%= period.title %></strong> 🏃‍♂️</h1>
     <% end %>
   </div>
-  <h3 class="text-center">on <strong><%= link_to period.task.name, task_path(period.task), class: "secondary" %> </strong>since <strong><%= period.created_at.strftime("%I:%M") %> <%= period.created_at.strftime("%p").downcase %></strong><%= " " + period.created_at.strftime("%a") if period.length > 1440 %> </h3>
+  <h3 class="text-center">on <strong><%= link_to period.task.name, task_path(period.task), class: "secondary" %> </strong>since <strong><%= period.created_at.strftime("%I:%M") %> <%= period.created_at.strftime("%p").downcase %></strong><%= " " + period.created_at.strftime("%a") if period.current_length > 1440 %> </h3>
 <% end %>
 

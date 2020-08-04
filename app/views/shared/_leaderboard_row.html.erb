@@ -1,0 +1,8 @@
+<div class="sub-backed js">
+  <div class="avatar-sm" title='<%= "#{user.first_name} - #{user.position}" %>' style="background-image: url('<%= user.photo.attached? ? url_for(user.photo) : "" %>'); background-color: <%= user.color %>" >
+    <p class="text-center bold"><%= user.initials if !user.photo.attached? %></p>
+  </div>
+  <h4><%= user.weekly_total %></h4>
+  <h4><%= user.weekly_price %></h4>
+</div>
+

@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_160822) do
+ActiveRecord::Schema.define(version: 2020_08_04_113048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -74,6 +84,16 @@ ActiveRecord::Schema.define(version: 2020_08_03_160822) do
     t.index ["project_id"], name: "index_lists_on_project_id"
   end
 
+  create_table "notes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "noteable_type"
+    t.bigint "noteable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["noteable_type", "noteable_id"], name: "index_notes_on_noteable_type_and_noteable_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
   create_table "periods", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -84,6 +104,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_160822) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "end_note"
     t.integer "price"
+    t.integer "length"
     t.index ["task_id"], name: "index_periods_on_task_id"
     t.index ["user_id"], name: "index_periods_on_user_id"
   end
@@ -130,6 +151,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_160822) do
     t.integer "length"
     t.datetime "completed_at"
     t.bigint "quote_id"
+    t.boolean "faulty", default: false
     t.index ["list_id"], name: "index_tasks_on_list_id"
     t.index ["quote_id"], name: "index_tasks_on_quote_id"
   end
@@ -185,6 +207,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_160822) do
   add_foreign_key "activity_logs", "users"
   add_foreign_key "invoices", "projects"
   add_foreign_key "lists", "projects"
+  add_foreign_key "notes", "users"
   add_foreign_key "periods", "tasks"
   add_foreign_key "periods", "users"
   add_foreign_key "projects", "users"

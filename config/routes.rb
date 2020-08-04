@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :quotes
   get 'projects/:id/team_memberships', to: "projects#team_memberships"
   resources :team_memberships, only: [:destroy]
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
   resources :tasks, except: [:create, :new] do
     resources :periods, only: [:create, :new]
   end
+  resources :notes, only: [:create, :update, :destroy]
   resources :periods, only: [:show, :update, :index] do
     member do
       patch :finish

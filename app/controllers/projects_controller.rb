@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
 
   def index
-    @projects = current_user.visible_projects
+    @projects = current_user.member_projects
   end
 
   def team_memberships
