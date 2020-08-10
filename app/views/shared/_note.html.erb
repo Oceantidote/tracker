@@ -1,0 +1,12 @@
+<div class="note">
+  <div class="avatar-sm note-avatar" title='<%= "#{note.user.full_name}" %>' style="background-image: url('<%= note.user.photo.attached? ? url_for(note.user.photo) : "" %>'); background-color: <%= note.user.color %>" >
+    <p class="text-center bold"><%= note.user.initials if !note.user.photo.attached? %></p>
+  </div>
+  <div class="note-content sub-note">
+    <div class="jbtwn">
+      <p><strong><%= note.user.first_name %></strong>, <%= note.user.position %></p>
+      <div class="subtext"><%= note.created_at.strftime("%I:%M %a %m/%d") %></div>
+    </div>
+    <div class="trix-content"><%= note.content %></div>
+  </div>
+</div>

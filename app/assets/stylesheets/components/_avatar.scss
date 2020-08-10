@@ -201,6 +201,17 @@ p {
   border-radius: 4px;
   border: 1px solid $light-blue-hover;
 }
+.sub-note {
+  position: relative;
+  padding: 0.25rem 0.5rem;
+  background-color: #fff9ed;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid $light-blue-hover;
+}
+.black {
+  color: black;
+}
 .back-hov {
   &:hover {
     background-color: $light-blue-hover;

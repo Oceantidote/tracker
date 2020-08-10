@@ -85,7 +85,7 @@ class ListsController < ApplicationController
     end
 
     def set_list
-      @list = List.includes([:user_tasks]).find(params[:id])
+      @list = List.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

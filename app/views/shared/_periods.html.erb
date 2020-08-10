@@ -6,10 +6,11 @@
     <div class="period-inner">
       <p class="elipssis"><%= period.user.first_name %> <span class="green"><%= "- LIVE NOW" if !period.end_time %></span></p>
       <% if period.end_time %>
-        <p class="subtext elipssis" >Was <%= period.title %> for <%= distance_of_time_in_words(period.length * 60) %> - <%= period.end_time.strftime("%I:%M") %> <%= period.end_time.strftime("%a %m/%d") %></p>
+        <p class="subtext elipssis" >Was <strong class="black"><%= period.title %></strong> for <%= distance_of_time_in_words(period.length * 60) %> - <%= period.end_time.strftime("%I:%M") %> <%= period.end_time.strftime("%a %m/%d") %></p>
       <% else %>
-        <p class="subtext elipssis green" >Has been <%= period.title %> for <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
+        <p class="subtext elipssis green" >Has been <strong class="black"><%= period.title %></strong> for <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
       <% end %>
+      <p class="subtext elipssis" ><%= period.description %></p>
     </div>
     <%= link_to period_path(period), class: "link" do  %>
     <% end %>

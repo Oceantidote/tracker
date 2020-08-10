@@ -16,16 +16,22 @@
   <div id="collapse_task_<%= task.id %>" class="collapse collapse_task <%= 'show' if index == 0  %>" aria-labelledby="headingOne" data-parent="#task_<%= task.id %>">
     <div class="card-body">
       <p><%= task.description %></p>
+      <hr>
       <% if task.periods.any? %>
         <h5 class="mt-4"><span class="subtext">Worked so far: </span><strong> <%= distance_of_time_in_words(task.total_length * 60) %></strong></h5>
         <%= render "shared/periods", periods: task.periods %>
       <% end %>
-      <hr>
-      <h5>Add a note:</h5>
-      <% task.notes.each do |note| %>
-        <div class="trix-content"><%= note.content %></div>
+      <div class="line-cont mt-4">
+        <h4>Discussion</h4>
+        <div class="heavyline"></div>
+      </div>
+      <% task.notes.order(created_at: :desc).each do |note| %>
+        <%= render "shared/note", note: note %>
       <% end %>
-      <%= render "notes/form", note: Note.new, noteable: task %>
+      <hr>
+      <div class="sub-note">
+        <%= render "notes/form", note: Note.new, noteable: task %>
+      </div>
     </div>
   </div>
 </div>

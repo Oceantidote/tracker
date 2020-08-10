@@ -243,6 +243,12 @@
   height: 16px;
   border-bottom: 2px solid $blue;
 }
+.heavyline {
+  margin: 0 10px;
+  width: calc(100% - 88px);
+  height: 16px;
+  border-bottom: 3px solid $blue;
+}
 .green-line {
   border-bottom: 2px solid $light-blue-hover;
 }
