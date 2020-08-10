@@ -16,9 +16,9 @@
   <% end %>
 
   <!-- TO SHOW PLUS BUTTON ON TEAM MEMBERSHIPS PAGE -->
-</div>
-<% unless delete || hide_add %>
-  <%= link_to project_team_memberships_path(@project), class: "line-link member-link" do %>
-    <div class="fas fa-plus blue"></div>
+  <% unless delete || hide_add %>
+    <%= link_to project_team_memberships_path(@project), class: "line-link member-link" do %>
+      <div class="fas fa-plus blue"></div>
+    <% end %>
   <% end %>
-<% end %>
+</div>

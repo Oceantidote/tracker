@@ -2,9 +2,10 @@
   <% if !current_user.accepts_promise %>
     <%= render "shared/unpromised_#{list.payment_type}_list", list: list %>
   <% elsif list.tasks.empty? %>
-    <h4>👇 <%= list.support_prompt %></h4>
+    <h5><%= list.support_prompt %></h5>
+    <h5>👇</h5>
   <% elsif list.incomplete_tasks.empty? %>
-    <h4>All tasks complete 🎉</h4>
+    <h5>All tasks complete 🎉</h5>
   <% else %>
     <% list.tasks.where(completed: false).each_with_index do |task, index| %>
       <%= render "shared/task", task: task, index: index %>

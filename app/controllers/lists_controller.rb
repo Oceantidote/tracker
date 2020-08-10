@@ -70,7 +70,7 @@ class ListsController < ApplicationController
       support = @project.lists.where(payment_type: 'support').to_a
       free = @project.lists.where(payment_type: 'free').to_a
       emergency = @project.lists.where(payment_type: 'emergency').to_a
-      if current_user.accepts_promise
+      if !current_user.accepts_promise
         [free, quoted, support, emergency]
       elsif emergency.length > 0
         [emergency, quoted, support, free]

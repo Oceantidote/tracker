@@ -13,9 +13,6 @@
     </div>
 
   </div>
-  <% if current_user.admin %>
-
-  <% end %>
   <div id="collapse_task_<%= task.id %>" class="collapse collapse_task <%= 'show' if index == 0  %>" aria-labelledby="headingOne" data-parent="#task_<%= task.id %>">
     <div class="card-body">
       <p><%= task.description %></p>

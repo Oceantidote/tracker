@@ -1,1 +1,17 @@
 // Specific CSS for your home-page
+.fgrow {
+  flex-grow: 1;
+}
+.psm {
+  font-size: 0.8rem;
+}
+.sub-col {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+}
+.hr {
+  width: 100%;
+  margin-top: 0;
+}

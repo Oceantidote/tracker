@@ -14,7 +14,7 @@
               <%= f.error_notification %>
               <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
               <div class="form-inputs">
-                <%= f.association :user, collection: @project.valid_members , prompt: "Which developer would you like to add?", label_method: :full_name, value_method: :id, include_blank: false, label: false %>
+                <%= f.association :user, collection: User.where(admin: true) - @project.members.where(admin: true) , prompt: "Which developer would you like to add?", label_method: :full_name, value_method: :id, include_blank: false, label: false %>
               </div>
 
 
@@ -39,7 +39,6 @@
                 <%= f.button :submit, "Invite", class: "btn-primary" %>
               </div>
             <% end %>
-            <% raise %>
             <% if @project.deleteable_memberships.any? %>
               <h5>or remove a someone</h5>
               <%= render "shared/member_row", memberships: @project.deleteable_memberships, delete: true %>

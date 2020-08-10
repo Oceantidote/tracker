@@ -28,6 +28,9 @@
     cursor: help;
   }
 }
+.no-z {
+  z-index: unset;
+}
 .avatar-large {
   width: 56px;
   border-radius: 50%;
