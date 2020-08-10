@@ -6,19 +6,29 @@
   <div class="col-sm-12">
     <div class="backed">
       <h3 class="text-center">Task: <%= @period.task.name %></h3>
-      <% if !@period.end_time && @period.user == current_user || @period.current_length > 60 %>
-        <%= simple_form_for (@current_period) do |f| %>
+      <% if !@period.end_time || current_user == @period.user || current_user == @period.task.list.project.dev_user %>
+        <%= simple_form_for (@period) do |f| %>
           <%= f.error_notification %>
           <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-          <% if @are_you_sure %>
-            <div class="form-inputs">
+          <div class="form-inputs">
+            <% if @period.created_at < 1.hour.ago || @period.end_time && current_user == @period.task.list.project.dev_user %>
               <%= f.input :end_time %>
-              <%= f.input :end_note, as: :text %>
+            <% end %>
+            <%= f.input :end_note, as: :text, placeholder: "Please add a description of what you did and how it was fixed", required: true %>
+            <% if @period.task.list.payment_type == "emergency" %>
+              <%= f.input :faulty, label: "Was this issue caused by faulty code on our end?", as: :radio_buttons %>
+            <% end %>
+            <%= f.input :completed, label: "Did you complete the task this period?", as: :radio_buttons %>
+          </div>
+          <% if @period.end_time %>
+            <div class="jc">
+              <%= f.button :submit, "Update Session", class: 'btn btn-tertiary' %>
+            </div>
+          <% else %>
+            <div class="jc">
+              <%= f.button :submit, "🛑 Stop Session ✋", class: 'btn btn-danger big-btn' %>
             </div>
           <% end %>
-          <div class="jc">
-            <%= f.button :submit, "🛑 Stop Session ✋", class: 'btn btn-danger big-btn' %>
-          </div>
         <% end %>
       <% end %>
     </div>

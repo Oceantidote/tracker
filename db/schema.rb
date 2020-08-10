@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_113048) do
+ActiveRecord::Schema.define(version: 2020_08_10_183249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,8 @@ ActiveRecord::Schema.define(version: 2020_08_04_113048) do
     t.string "end_note"
     t.integer "price"
     t.integer "length", default: 0
+    t.boolean "faulty", default: false
+    t.boolean "completed", default: false
     t.index ["task_id"], name: "index_periods_on_task_id"
     t.index ["user_id"], name: "index_periods_on_user_id"
   end

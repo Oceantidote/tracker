@@ -11,17 +11,22 @@
 
   <div id="collapse_task_<%= task.id %>" class="collapse collapse_task" aria-labelledby="headingOne" data-parent="#listAccordionExample_<%= task.list.id %>">
     <div class="card-body">
-      <div class="accordion" id="taskAccordionExample_<%= task.id %>">
-        <% in_progress = task.periods.where(end_time: nil) %>
-        <% if in_progress.any? %>
-          <% task.periods.where(end_time: nil).each_with_index do |period| %>
-            <%= render "shared/period", period: period %>
-          <% end %>
-        <% end %>
-        <h5>Completed</h5>
-        <% task.periods.where.not(end_time: nil).order(end_time: :desc).each_with_index do |period, index| %>
-          <%= render "shared/complete_period", period: period, index: index %>
-        <% end %>
+      <p><%= task.description %></p>
+      <hr>
+      <% if task.periods.any? %>
+        <h5 class="mt-4"><span class="subtext">Worked so far: </span><strong> <%= distance_of_time_in_words(task.total_length * 60) %></strong></h5>
+        <%= render "shared/periods", periods: task.periods %>
+      <% end %>
+      <div class="line-cont mt-4">
+        <h4>Discussion</h4>
+        <div class="heavyline"></div>
+      </div>
+      <% task.notes.order(created_at: :desc).each do |note| %>
+        <%= render "shared/note", note: note %>
+      <% end %>
+      <hr>
+      <div class="sub-note">
+        <%= render "notes/form", note: Note.new, noteable: task %>
       </div>
     </div>
   </div>

@@ -1,21 +1,8 @@
+<div class="top-header">
+  <h3 class="text-center"><%= link_to @task.list.project.name, project_path(@task.list.project), class: 'secondary' %> | <%= link_to @task.list.name, list_path(@task.list), class: 'secondary' %> | <%= @task.name %></h3>
+</div>
 <div class="container">
-  <div class="backed">
-    <%= simple_form_for(@task) do |f| %>
-      <%= f.error_notification %>
-      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-      <div class="form-inputs">
-        <%= f.input :name %>
-        <%= f.input :description %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.button :submit %>
-      </div>
-    <% end %>
-    <div class="sub-backed">
-      <%= render "shared/periods", periods: @task.periods %>
-    </div>
+  <div class="backed nomin">
+    <%= render "shared/task", task: @task, index: 0 %>
   </div>
-
 </div>

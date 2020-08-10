@@ -6,8 +6,14 @@
       <%= list.name %><span class="ml-2 <%= 'green' if list.incomplete_tasks.length == 0  %>"><%= list.tasks.length - list.incomplete_tasks.length %>/<%= list.tasks.length %></span>
     </h3>
     <div class="line green-line"></div>
-    <%= link_to list_path(list), class: "list-line-link" do %>
-      <i class="fas fa-eye green"></i></h5>
+    <% if action_name == "index" %>
+      <%= link_to list_path(list), class: "list-line-link" do %>
+        <i class="fas fa-eye green"></i></h5>
+      <% end %>
+    <% else %>
+      <%= link_to edit_list_path(list), class: "list-line-link" do %>
+        <i class="fas fa-edit"></i></h5>
+      <% end %>
     <% end %>
   </div>
 </div>

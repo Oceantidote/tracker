@@ -18,11 +18,12 @@ class ListsController < ApplicationController
 
   # GET /lists/new
   def new
-
+    @list = List.new
   end
 
   # GET /lists/1/edit
   def edit
+    @project = @list.project
   end
 
   # POST /lists

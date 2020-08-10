@@ -18,12 +18,14 @@ class PeriodsController < ApplicationController
   end
 
   def update
-    time_params = period_params
+    time_params = nested_period_params
     if !time_params[:end_time]
       time_params[:end_time] = Time.now
     end
     @period.update(time_params)
     if @period.save
+      @period.task.update!(completed: true) if @period.completed
+      @period.task.update!(completed: true) if @period.faulty
       redirect_to :root
     else
       render :show
@@ -37,11 +39,11 @@ class PeriodsController < ApplicationController
   private
 
   def nested_period_params
-    params.require(:period).permit(:end_note, :title, :description, :end_time)
+    params.require(:period).permit(:end_note, :title, :description, :end_time, :faulty, :completed)
   end
 
   def period_params
-    params.permit(:task, :end_note, :title, :description, :end_time)
+    params.permit(:task, :end_note, :title, :description, :end_time, :faulty, :completed)
   end
 
   def set_period
