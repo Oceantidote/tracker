@@ -66,10 +66,11 @@ class ListsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
 
     def ordered_lists
-      quoted = @project.lists.where(payment_type: 'quoted').to_a
-      support = @project.lists.where(payment_type: 'support').to_a
-      free = @project.lists.where(payment_type: 'free').to_a
-      emergency = @project.lists.where(payment_type: 'emergency').to_a
+      list = List.includes({tasks: [{ users: :photo_attachment },:user_tasks, { periods: {user: :photo_attachment} }, { notes: :rich_text_content }]}, { project: { team_memberships: { user: :photo_attachment }}}).where(project: @project)
+      quoted = list.where(payment_type: 'quoted')
+      support = list.where(payment_type: 'support')
+      free = list.where(payment_type: 'free')
+      emergency = list.where(payment_type: 'emergency')
       if !current_user.accepts_promise
         [free, quoted, support, emergency]
       elsif emergency.length > 0
@@ -84,7 +85,7 @@ class ListsController < ApplicationController
     end
 
     def set_list
-      @list = List.find(params[:id])
+      @list = List.includes([:user_tasks]).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

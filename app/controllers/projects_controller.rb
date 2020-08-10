@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
 
   def index
-    @projects = current_user.member_projects
+    @projects = current_user.member_projects.includes(team_memberships: [user: [photo_attachment: [:blob]]]).all
   end
 
   def team_memberships
@@ -71,7 +71,7 @@ class ProjectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = Project.find(params[:id])
+      @project = Project.includes(team_memberships: [user: [photo_attachment: :blob]], lists: [:tasks]).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

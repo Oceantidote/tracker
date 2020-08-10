@@ -13,7 +13,7 @@ class PagesController < ApplicationController
   end
 
   def developer
-    @admin_users = User.where(admin: true)
+    @admin_users = User.includes(photo_attachment: [:blob]).where(admin: true)
     redirect_to period_path(@current_period) if @current_period
     @assigned_tasks = current_user.assigned_tasks
     @due_tasks = current_user.member_tasks.order(completed_by: :asc)

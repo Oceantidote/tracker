@@ -17,7 +17,7 @@
     <div class="card-body">
       <p><%= task.description %></p>
       <% if task.periods.any? %>
-        <h5 class="mt-4">Worked so far: <%= distance_of_time_in_words(task.total_length * 60 + task.periods.where(end_time: nil).each{|r| sum += r.length}) %></h5>
+        <h5 class="mt-4"><span class="subtext">Worked so far: </span><strong> <%= distance_of_time_in_words(task.total_length * 60) %></strong></h5>
         <%= render "shared/periods", periods: task.periods %>
       <% end %>
       <hr>

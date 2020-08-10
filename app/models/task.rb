@@ -22,7 +22,7 @@ class Task < ApplicationRecord
 
   def total_length
     sum = 0
-    periods.each{|r| sum += r.length}
+    periods.each{|r| sum += r.current_length}
     sum
   end
 end
