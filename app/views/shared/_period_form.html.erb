@@ -3,7 +3,7 @@
 <%= simple_form_for [task, Period.new], html: { class: "period-form", id: "period_form_#{task.id}" } do |f| %>
   <%= f.input :title, placeholder: "I will be ....", input_html: { id: "title_#{task.id}"}, label: false %>
   <%= f.input :description, label: false, placeholder: "I might feel like adding more detail, but I don't have to" %>
-  <%= f.button :submit, "GO", class: 'btn btn-primary mt-2', id: "confirm_#{task.id}", disabled: true %>
+  <%= f.button :submit, "GO", class: 'btn btn-primary mt-2', id: "confirm_#{task.id}"%>
 <% end %>
 
 <script>
@@ -27,7 +27,13 @@
     }
   })
   document.getElementById('confirm_<%= task.id %>').addEventListener('click', (e) => {
-    document.getElementById('period_form_<%= task.id %>').submit()
+    if (document.getElementById('title_<%= task.id %>').value == "") {
+      e.preventDefault()
+      document.getElementById('title_<%= task.id %>').classList.add("shake")
+      setTimeout(function(){ document.getElementById('title_<%= task.id %>').classList.remove("shake"); }, 1000);
+    } else {
+      document.getElementById('period_form_<%= task.id %>').submit()
+    }
   })
   document.getElementById('title_<%= task.id %>').addEventListener('keyup', (e) => {
     if (e.target.value != "") {

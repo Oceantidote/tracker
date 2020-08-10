@@ -4,7 +4,7 @@ class Period < ApplicationRecord
   belongs_to :user, :class_name => 'User'
   validates :title, presence: true
   before_update :set_price
-  before_update :set_length
+  before_update :set_length!
 
   def set_length!
     self.length = current_length
@@ -16,7 +16,7 @@ class Period < ApplicationRecord
     else
       elapsed = (end_time - created_at) / 60.to_f
     end
-    (elapsed / 5).ceil * 1
+    elapsed.ceil
   end
 
   def total

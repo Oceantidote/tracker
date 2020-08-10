@@ -16,23 +16,16 @@
   <div id="collapse_task_<%= task.id %>" class="collapse collapse_task <%= 'show' if index == 0  %>" aria-labelledby="headingOne" data-parent="#task_<%= task.id %>">
     <div class="card-body">
       <p><%= task.description %></p>
-      <%= render "notes/form", note: Note.new, noteable: task %>
+      <% if task.periods.any? %>
+        <h5 class="mt-4">Worked so far: <%= distance_of_time_in_words(task.total_length * 60 + task.periods.where(end_time: nil).each{|r| sum += r.length}) %></h5>
+        <%= render "shared/periods", periods: task.periods %>
+      <% end %>
+      <hr>
+      <h5>Add a note:</h5>
       <% task.notes.each do |note| %>
         <div class="trix-content"><%= note.content %></div>
       <% end %>
-      <% if task.periods.any? %>
-        <div class="accordion" id="taskAccordionExample_<%= task.id %>">
-          <% in_progress = task.periods.where(end_time: nil) %>
-          <% if in_progress.any? %>
-            <% task.periods.where(end_time: nil).each_with_index do |period| %>
-              <%= render "shared/period", period: period %>
-            <% end %>
-          <% end %>
-          <% task.periods.where.not(end_time: nil).order(end_time: :desc).each_with_index do |period, index| %>
-            <%= render "shared/complete_period", period: period, index: index %>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render "notes/form", note: Note.new, noteable: task %>
     </div>
   </div>
 </div>
