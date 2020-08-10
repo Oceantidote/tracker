@@ -42,7 +42,7 @@ class User < ApplicationRecord
   end
 
   def set_color
-    color = "#" + Random.bytes(3).unpack1('H*')
+    self.color = "#" + Random.bytes(3).unpack1('H*')
   end
 
   def my_pending_invoices
