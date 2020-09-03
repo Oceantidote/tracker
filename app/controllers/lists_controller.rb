@@ -70,7 +70,7 @@ class ListsController < ApplicationController
       list = List.includes({tasks: [{ users: :photo_attachment },:user_tasks, { periods: {user: :photo_attachment} }, { notes: :rich_text_content }]}, { project: { team_memberships: { user: :photo_attachment }}}).where(project: @project)
       quoted = list.where(payment_type: 'quoted')
       support = list.where(payment_type: 'support')
-      free = list.where(payment_type: 'free')
+      free = list.where(payment_type: 'my_tasks')
       emergency = list.where(payment_type: 'emergency')
       if !current_user.accepts_promise
         [free, quoted, support, emergency]

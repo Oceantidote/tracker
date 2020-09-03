@@ -37,7 +37,13 @@
     </div>
   </div>
 <% end %>
-<div class="btn btn-tertiary showme mb-2" id="new_task_<%= list.id %>">Add task</div>
+<div class="line-link showme mb-2" id="new_task_<%= list.id %>">
+  <i class="fas fa-plus blue"></i>
+</div>
+
+
+
+
 <script>
   document.getElementById('new_task_<%= list.id %>').addEventListener('click', (e) => {
     document.getElementById('task_form_<%= list.id %>').classList.add('high')

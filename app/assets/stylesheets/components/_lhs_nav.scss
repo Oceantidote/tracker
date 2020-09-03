@@ -3,6 +3,9 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  a p,i {
+    color: #596568;
+  }
 }
 .overall-cont {
   width: 100%;
@@ -20,9 +23,17 @@
   overflow-y: scroll;
 }
 .primary {
-  color: $primary;
-  &:hover {
-    color: $primary;
+  i {
+    color: $primary !important;
+    &:hover {
+      color: $primary !important;
+    }
+  }
+  p {
+    color: $primary !important;
+    &:hover {
+      color: $primary !important;
+    }
   }
 }
 .secondary {
@@ -30,7 +41,13 @@
   color: $gray;
   &:hover {
     text-decoration: none !important;
-    color: $primary;
+    color: $primary !important;
+    p {
+      color: $primary !important;
+    }
+    i {
+      color: $primary !important;
+    }
   }
 }
 .edit-link {
