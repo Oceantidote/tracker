@@ -3,7 +3,7 @@
     <h3 class="help" title="<%= list.type_info %>"><%= list.type_emoji %></h3>
     <div class="line green-line"></div>
     <h3 class="secondary text-center list-title <%= 'collapsed' unless index == 0  %>" data-toggle="collapse" data-target="#collapse_<%= list.id %>" aria-expanded="<%= index == 0 ? true : false %>" aria-controls="collapse_<%= list.id %>">
-      <%= list.name %><span class="ml-2 <%= 'green' if list.incomplete_tasks.length == 0  %>"><%= list.tasks.length - list.incomplete_tasks.length %>/<%= list.tasks.length %></span>
+      <%= list.name %><span class="ml-2 <%= 'blue' if list.incomplete_tasks.length == 0  %>"><%= list.tasks.length - list.incomplete_tasks.length %>/<%= list.tasks.length %></span>
     </h3>
     <div class="line green-line"></div>
     <% if action_name == "index" %>

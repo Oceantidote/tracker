@@ -1,14 +1,16 @@
 <div class="container">
   <div class="rhs-cont">
     <div class="top-header">
-      <h2 class="text-center"><strong>Hi <%= current_user.first_name.capitalize %>!</strong></h2>
-      <h4 class="text-center">Here's what's been important today</h4>
-      <p class="tet-center"><%= Time.now.strftime("%d%m%y %a") %></p>
+      <h2><strong>Hi <%= current_user.first_name.capitalize %>!</strong></h2>
+      <h4>Here's what's been important today</h4>
+      <hr>
+      <p><%= Time.now.strftime("%A, %b %d") %></p>
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <div class="backed">
           <h4>HD Devs working live now:</h4>
+          <hr>
           <div class="backed-inner">
             <% if @periods.empty? %>
               <%= render 'shared/void', emoji: "😴", message: "Nothing to report", title: "All quiet on the western front" %>
@@ -21,6 +23,7 @@
       <div class="col-sm-12 col-md-6">
         <div class="backed">
           <h4>Tasks due soon:</h4>
+          <hr>
           <div class="backed-inner">
             <% if @tasks.empty? %>
             <%= render 'shared/void', emoji: "🍻", title: "Well done!", message: "It looks like we are the best agency in the world! have another beer!" %>
@@ -33,6 +36,7 @@
       <div class="col-sm-12 col-md-6">
         <div class="backed">
           <h4>Invoices needing your approval:</h4>
+          <hr>
           <div class="backed-inner">
             <% if @invoices.empty? %>
               <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you have approved all your invoices. You are the best accountant in the world! BEER!" %>
@@ -45,6 +49,7 @@
       <div class="col-sm-12 col-md-6">
         <div class="backed">
           <h4>Leaderboard</h4>
+          <hr>
           <div class="backed-inner">
             <h5>COMING SOON!</h5>
           </div>

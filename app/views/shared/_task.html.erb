@@ -1,6 +1,6 @@
 <div class="card pt-2">
   <div class="card-header task-header" id="task_<%= task.id %>">
-    <div class="js as wrap pb-2">
+    <div class="d-flex align-items-center wrap pb-2">
       <%= link_to "✅", complete_list_task_path(task.list, task), class: "complete" %>
       <h4 class="secondary  ml-2 mb-0 <%= 'collapsed' unless index == 0  %>" data-toggle="collapse" data-target="#collapse_task_<%= task.id %>" aria-expanded="<%= index == 0 ? true : false %>" aria-controls="collapse_task_<%= task.id %>">
         <%= task.name %>
