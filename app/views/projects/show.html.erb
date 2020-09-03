@@ -20,7 +20,7 @@
         <hr>
         <div class="backed-inner">
           <% @project.lists.each do |list| %>
-            <h5>
+            <h6>
               <%= link_to list_path(list), class: 'secondary' do %>
                  <span class="<%= 'green' if list.incomplete_tasks.length == 0  %>"><%= list.name %>
                   (<%= list.tasks.length - list.incomplete_tasks.length %>/<%= list.tasks.length %>)
@@ -29,7 +29,7 @@
                   <% end %>
                 </span>
               <% end %>
-            </h5>
+            </h6>
           <% end %>
         </div>
       </div>

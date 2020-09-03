@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_183249) do
     t.boolean "paid", default: false
     t.float "total"
     t.datetime "paid_at"
-    t.datetime "due_by", default: "2020-08-11 12:37:12"
+    t.datetime "due_by", default: "2020-09-10 10:12:49"
     t.index ["project_id"], name: "index_invoices_on_project_id"
   end
 
