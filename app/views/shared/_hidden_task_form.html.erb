@@ -20,7 +20,7 @@
       <div class="category-choices">
         <% list.project.valid_members.each do |user| %>
           <label class="category-choice jca" title="<%= user.full_name %>" style="background-image: url('<%= user.photo.attached? ? url_for(user.photo) : "" %>'); background-color: <%= user.color %>">
-            <p class="text-center bold"><%= user.initials if !user.photo.attached? %></p>
+            <p class="text-center bold m-0"><%= user.initials if !user.photo.attached? %></p>
           </label>
           <input type="checkbox" class="hdchekbox mr-2" value="<%= user.id %>" name="task[user_ids][]" id="task_user_ids_<%= user.id %>">
         <% end %>

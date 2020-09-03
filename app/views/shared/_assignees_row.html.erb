@@ -1,7 +1,7 @@
 <div class="jc ml-2">
   <% users.each do |user| %>
     <div class="avatar-sm jar no-z" title='<%= "#{user.full_name}" %>' style="background-image: url('<%= user.photo.attached? ? url_for(user.photo) : "" %>'); background-color: <%= user.color %>">
-       <p class="text-center bold"><%= user.initials if !user.photo.attached? %></p>
+       <p class="text-center bold m-0"><%= user.initials if !user.photo.attached? %></p>
     </div>
   <% end %>
 </div>
