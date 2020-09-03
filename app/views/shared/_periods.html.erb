@@ -1,18 +1,25 @@
-<% periods.order(end_time: :desc).each do |period| %>
-  <div class="js rel sub-backed">
-    <div class="avatar-sm mt-1" title="<%= "#{period.user.full_name} - Team Lead" %>" style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : asset_path("user.png") %>')" >
+<% if periods.length > 0 %>
+  <% periods.order(end_time: :desc).each do |period| %>
+    <div class="js rel sub-backed">
+      <div class="avatar-sm mt-1" title="<%= "#{period.user.full_name} - Team Lead" %>" style="background-image: url('<%= period.user.photo.attached? ? url_for(period.user.photo) : asset_path("user.png") %>')" >
 
-    </div>
-    <div class="period-inner">
-      <p class="elipssis"><%= period.user.first_name %> <span class="green"><%= "- LIVE NOW" if !period.end_time %></span></p>
-      <% if period.end_time %>
-        <p class="subtext elipssis" >Was <strong class="black"><%= period.title %></strong> for <%= distance_of_time_in_words(period.length * 60) %> - <%= period.end_time.strftime("%I:%M") %> <%= period.end_time.strftime("%a %m/%d") %></p>
-      <% else %>
-        <p class="subtext elipssis green" >Has been <strong class="black"><%= period.title %></strong> for <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
+      </div>
+      <div class="period-inner">
+        <p class="elipssis"><%= period.user.first_name %> <span class="green"><%= "- LIVE NOW" if !period.end_time %></span></p>
+        <% if period.end_time %>
+          <p class="subtext elipssis" >Was <strong class="black"><%= period.title %></strong> for <%= distance_of_time_in_words(period.length * 60) %> - <%= period.end_time.strftime("%I:%M") %> <%= period.end_time.strftime("%a %m/%d") %></p>
+        <% else %>
+          <p class="subtext elipssis green" >Has been <strong class="black"><%= period.title %></strong> for <%= distance_of_time_in_words(period.created_at - Time.now) %></p>
+        <% end %>
+        <p class="subtext elipssis" ><%= period.description %></p>
+      </div>
+      <%= link_to period_path(period), class: "link" do  %>
       <% end %>
-      <p class="subtext elipssis" ><%= period.description %></p>
     </div>
-    <%= link_to period_path(period), class: "link" do  %>
-    <% end %>
-  </div>
+  <% end %>
+  <% else %>
+  <p class="backed-emoji">🏃‍♂️</p>
+  <p class="text-center grey size-14">
+    All the tasks that the team are currently working on.
+  </p>
 <% end %>
