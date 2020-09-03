@@ -41,7 +41,7 @@ class Project < ApplicationRecord
        by the project owner the task will be billed upon completion. Best for large features and major changes."],
       ["support", "Hourly ⏱️ -> Tasks will be started as soon as possible and billed at an hourly rate. Best for small changes to
        the site and stuff you want done fast."],
-      ["free", "Free 🆓 -> Tasks will not be charged, so best to add the jobs that don't require development here."]
+      ["my tasks", "My Tasks 🆓 -> This is a good list type to use for your own tasks or when you are testing out the platform for the first time."]
     ]
   end
 
@@ -51,6 +51,6 @@ class Project < ApplicationRecord
     List.create!(name: "Emergencies", payment_type: "emergency", project: self)
     List.create!(name: "Support", payment_type: "support", project: self)
     List.create!(name: "Quoted", payment_type: "quoted", project: self)
-    List.create!(name: "Free", payment_type: "free", project: self)
+    List.create!(name: "My tasks", payment_type: "my_tasks", project: self)
   end
 end
