@@ -4,10 +4,12 @@
       <div class="card">
         <div class="card-header" id="list_<%= list.id %>">
           <%= render 'shared/list_line', list: list, index: index %>
-          <p class="text-center"><%= list.description %></p>
+          <% if list.description %>
+            <p class="text-center"><%= list.description %></p>
+          <% end %>
         </div>
         <div class="small-container">
-          <div id="collapse_<%= list.id %>" class="collapse <%= 'show' if index == 0  %>" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div id="collapse_<%= list.id %>" class="show" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
               <%= render "shared/tasks", list: list %>
             </div>

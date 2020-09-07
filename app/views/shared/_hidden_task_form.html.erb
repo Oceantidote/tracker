@@ -20,7 +20,7 @@
       <div class="category-choices">
         <% list.project.valid_members.each do |user| %>
           <label class="category-choice jca" title="<%= user.full_name %>" style="background-image: url('<%= user.photo.attached? ? url_for(user.photo) : "" %>'); background-color: <%= user.color %>">
-            <p class="text-center bold"><%= user.initials if !user.photo.attached? %></p>
+            <p class="text-center bold m-0"><%= user.initials if !user.photo.attached? %></p>
           </label>
           <input type="checkbox" class="hdchekbox mr-2" value="<%= user.id %>" name="task[user_ids][]" id="task_user_ids_<%= user.id %>">
         <% end %>
@@ -37,7 +37,13 @@
     </div>
   </div>
 <% end %>
-<div class="btn btn-tertiary showme mb-2" id="new_task_<%= list.id %>">Add task</div>
+<div class="line-link showme mb-2" id="new_task_<%= list.id %>">
+  <i class="fas fa-plus blue"></i>
+</div>
+
+
+
+
 <script>
   document.getElementById('new_task_<%= list.id %>').addEventListener('click', (e) => {
     document.getElementById('task_form_<%= list.id %>').classList.add('high')

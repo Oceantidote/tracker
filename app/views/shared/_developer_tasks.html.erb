@@ -1,5 +1,3 @@
 <% tasks.each do |task| %>
-  <div class="js">
-    <p><%= task.name %></p>
-  </div>
+  <%= link_to task.name, task_path(task), class: "task_link" %>
 <% end %>

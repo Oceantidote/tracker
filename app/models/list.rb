@@ -6,10 +6,10 @@ class List < ApplicationRecord
   validates :payment_type, presence: true
 
   PAYMENT_TYPES = {
-    "emergency" => "Emergency 🚨 -> If your site has gone down or something is breaking add it here. Your team will be notified immediately and the task will go to the top of their priority list. If we were the cause of the error the tasks will be free, if not the task will be billed hourly upon completion.",
-    "quoted" => "Quoted 🤝 -> New tasks will be quoted at a fixed price by the development team. If the quote is accepted by the project owner the task will be billed upon completion. Best for large features and major changes.",
-    "support" => "Hourly ⏱️ -> Tasks will be started immediately and billed at an hourly rate. Best for small changes to the site and stuff you want done fast.",
-    "free" => "Free 🆓 -> Tasks will not be charged, so best to add the jobs that don't require development here."
+    "emergency" => "Emergency -> If your site has gone down or something is breaking add it here. Your team will be notified immediately and the task will go to the top of their priority list. If we were the cause of the error the tasks will be free, if not the task will be billed hourly upon completion.",
+    "quoted" => "Quoted -> New tasks will be quoted at a fixed price by the development team. If the quote is accepted by the project owner the task will be billed upon completion. Best for large features and major changes.",
+    "support" => "Hourly -> Tasks will be started immediately and billed at an hourly rate. Best for small changes to the site and stuff you want done fast.",
+    "my_tasks" => "My Tasks -> This is a good list type to use for your own tasks or when you are testing out the platform for the first time."
   }
 
   def incomplete_tasks
@@ -24,7 +24,7 @@ class List < ApplicationRecord
       '🤝'
     when 'support'
       '⏱️'
-    when 'free'
+    when 'my_tasks'
       '🆓'
     end
   end
@@ -37,8 +37,8 @@ class List < ApplicationRecord
       'New tasks will be quoted at a fixed price by the development team. If the quote is accepted by the project owner the task will be billed upon completion. Best for large features and major changes.'
     when 'support'
       'Support asks will be started immediately and billed at an hourly rate. Best for small changes to the site and stuff you want done fast.'
-    when 'free'
-      "Free tasks will not be charged, so best to add the jobs that don't require development here. This is also a good type of list to use for your own tasks or testing out the platform"
+    when 'my_tasks'
+      "This is a good list type to use for your own tasks or when you are testing out the platform for the first time."
     end
   end
 

@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-4">
       <div class="backed">
-        <h4 class="elipssis"><strong>Developing now  🏃‍♂️</strong></h4>
+        <h4 class="elipssis"><strong>Developing now</strong></h4>
         <hr>
         <div class="backed-inner">
           <%= render "shared/periods", periods: @project.live_periods %>
@@ -20,7 +20,7 @@
         <hr>
         <div class="backed-inner">
           <% @project.lists.each do |list| %>
-            <h5>
+            <h6>
               <%= link_to list_path(list), class: 'secondary' do %>
                  <span class="<%= 'green' if list.incomplete_tasks.length == 0  %>"><%= list.name %>
                   (<%= list.tasks.length - list.incomplete_tasks.length %>/<%= list.tasks.length %>)
@@ -29,56 +29,79 @@
                   <% end %>
                 </span>
               <% end %>
-            </h5>
+            </h6>
           <% end %>
         </div>
       </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4">
       <div class="backed">
-        <h4 class="elipssis"><strong>Campfire  🏕️</strong></h4>
+        <h4 class="elipssis"><strong>Campfire</strong></h4>
         <hr>
         <div class="backed-inner">
+          <!-- When messages are added, put an if statement here, e.g. if @messages.length > 0 else show this stuff👇 -->
+          <p class="backed-emoji">🏕</p>
+          <p class="text-center grey size-14">
+            Chat casually with the team, ask random questions, and share stuff without ceremony.
+          </p>
         </div>
       </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4">
       <div class="backed">
-        <h4 class="elipssis"><strong>Paid invoices  💳</strong></h4>
+        <h4 class="elipssis"><strong>Paid invoices</strong></h4>
         <hr>
         <div class="backed-inner">
-          <% @project.paid_invoices.each do |invoice| %>
-            <div class="sub-backed">
-              <p class='m-0'><%= 1001 + invoice.id %> - <strong>£ <%= invoice.total %></strong> paid <%= distance_of_time_in_words(invoice.due_by - Time.now) %></p>
-              <%= link_to invoice_path, class: "link" do %>
-              <% end %>
-            </div>
+          <% if @project.paid_invoices.length > 0 %>
+            <% @project.paid_invoices.each do |invoice| %>
+              <div class="sub-backed">
+                <p class='m-0'><%= 1001 + invoice.id %> - <strong>£ <%= invoice.total %></strong> paid <%= distance_of_time_in_words(invoice.due_by - Time.now) %></p>
+                <%= link_to invoice_path, class: "link" do %>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="backed-emoji">💳</p>
+            <p class="text-center grey size-14">
+              Completed invoices for finished tasks, organised by date.
+            </p>
           <% end %>
         </div>
       </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4">
       <div class="backed">
-        <h4 class="elipssis"><strong>Outstanding Invoices</strong> <span style="font-size: 1.25rem;">⏰</span></h4>
+        <h4 class="elipssis"><strong>Outstanding Invoices</strong></h4>
         <hr>
         <div class="backed-inner">
-          <% @project.unpaid_invoices.each do |invoice| %>
-            <div class="sub-backed <%= invoice.color %>">
-              <p class='m-0'><%= 1001 + invoice.id %> - <strong>£ <%= invoice.total %></strong> <%= invoice.due_by > Time.now ? "due in" : "overdue by"  %> <%= distance_of_time_in_words(invoice.due_by - Time.now) %></p>
-              <%= link_to invoice_path, class: "link" do %>
-              <% end %>
-            </div>
+          <% if @project.unpaid_invoices.length > 0 %>
+            <% @project.unpaid_invoices.each do |invoice| %>
+              <div class="sub-backed <%= invoice.color %>">
+                <p class='m-0'><%= 1001 + invoice.id %> - <strong>£ <%= invoice.total %></strong> <%= invoice.due_by > Time.now ? "due in" : "overdue by"  %> <%= distance_of_time_in_words(invoice.due_by - Time.now) %></p>
+                <%= link_to invoice_path, class: "link" do %>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="backed-emoji">⏰</p>
+            <p class="text-center grey size-14">
+              Invoices which have not yet been paid.
+            </p>
           <% end %>
         </div>
       </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4">
       <div class="backed">
-        <h4 class="elipssis"><strong>Documents  📄</strong></h4>
+        <h4 class="elipssis"><strong>Documents</strong></h4>
         <hr>
         <div class="backed-inner">
+          <p class="backed-emoji">📄</p>
+          <p class="text-center grey size-14">
+            Share docs, files, images, and spreadsheets. Organise in folders so they’re easy to find.
+          </p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

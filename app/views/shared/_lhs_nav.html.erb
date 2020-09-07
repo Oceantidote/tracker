@@ -28,13 +28,15 @@
       <div >
         <i class="fa fa-smile" aria-hidden="true"></i>
       </div>
-      <p class="head-link"><strong>me</strong></p>
+      <p class="head-link"><strong>profile</strong></p>
     </div>
   <% end %>
-  <div class="btn secondary">
+  <%= link_to root_path do %>
+    <div class="btn secondary">
       <div>
         <i class="fa fa-comments" aria-hidden="true"></i>
       </div>
       <p class="head-link"><strong>messages</strong></p>
     </div>
+  <% end %>
 </div>

@@ -1,0 +1,29 @@
+.backed {
+  border-radius: 8px;
+  background-color: #FAFAFA;
+  padding: 1rem;
+  margin-bottom: 30px;
+  min-height: 175px;
+  transition: background-color 0.5s;
+  border: 1px solid #E6E6E6;
+  cursor: pointer;
+  h4 {
+    text-align: center;
+    margin: 0;
+  }
+}
+
+.backed-sm {
+  min-height: 145px;
+}
+
+.backed-inner {
+  width: 100%;
+  height: 170px;
+  overflow: scroll;
+}
+
+.backed-emoji {
+  font-size: 50px;
+  text-align: center;
+}
