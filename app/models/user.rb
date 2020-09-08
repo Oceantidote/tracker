@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :quotes
   has_many :quote_tasks, through: :quotes
   has_many :quoted_tasks, through: :quotes, source: :user
-  has_many :invoices, through: :projects, source: :user
+  has_many :invoices, through: :projects, source: :invoices
   has_many :user_tasks
   has_many :assigned_tasks, through: :user_tasks, source: :task
   has_many :periods

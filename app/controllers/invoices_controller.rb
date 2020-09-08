@@ -1,15 +1,16 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+  before_action :set_invoice, only: [:approve, :show, :edit, :update, :destroy]
 
   # GET /invoices
   # GET /invoices.json
   def index
-    @invoices = Invoice.all
+    @invoices = policy_scope(Invoice)
   end
 
   # GET /invoices/1
   # GET /invoices/1.json
   def show
+
   end
 
   # GET /invoices/new
@@ -19,6 +20,11 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1/edit
   def edit
+  end
+
+  def approve
+    @invoice.update(approved: true)
+    redirect_to invoices_path
   end
 
   # POST /invoices
@@ -65,6 +71,7 @@ class InvoicesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
       @invoice = Invoice.find(params[:id])
+      authorize @invoice
     end
 
     # Only allow a list of trusted parameters through.

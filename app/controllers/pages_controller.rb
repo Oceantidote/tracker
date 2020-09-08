@@ -18,7 +18,7 @@ class PagesController < ApplicationController
     @assigned_tasks = current_user.assigned_tasks
     @due_tasks = current_user.member_tasks.order(completed_by: :asc)
     @dev_periods = current_user.periods
-    @my_invoices = current_user.dev_invoices
+    @my_invoices = current_user.dev_invoices.where(approved: false)
   end
 
   def profile

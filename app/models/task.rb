@@ -2,12 +2,12 @@ class Task < ApplicationRecord
 
   belongs_to :list
   belongs_to :quote, optional: true
+  belongs_to :invoice, optional: true
 
   has_many :periods
   has_many :user_tasks
   has_many :users, through: :user_tasks
   has_many :notes, as: :noteable
-
   validates :name, presence: true
 
   before_save :set_approved

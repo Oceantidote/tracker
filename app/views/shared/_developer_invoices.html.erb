@@ -1,20 +1,6 @@
-<%# invoices.each do |invoice| %>
-  <%#= link_to invoice_path(invoice) do  %>
-   <!-- <p><%#= invoice.project.name %> - <%#= invoice.project.user.full_name %></p> -->
-<!-- Previous Invoice Code -->
-
-<%# invoices.each do |invoice| %>
-  <%#= link_to invoice_path(invoice) do  %>
-    <!-- <p><%#= invoice.project.name %> - <%#= invoice.project.user.full_name %></p> -->
-  <%# end %>
-<%# end %>
-
-
-<!-- Temporary code while invoice is just a user -->
-<% invoices.first.projects.each do |project| %>
-  <% project.invoices.each do |invoice|  %>
-    <%= link_to invoice_path(invoice) do  %>
-      <p><%= invoice.project.name %> - <%= invoice.project.user.full_name %></p>
-    <% end %>
+<% invoices.each do |invoice| %>
+  <%= link_to invoice_path(invoice) do  %>
+    <p><%= invoice.project.name %> - <%= invoice.project.user.full_name %></p>
   <% end %>
 <% end %>
+

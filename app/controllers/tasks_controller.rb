@@ -23,7 +23,7 @@ class TasksController < ApplicationController
   end
 
   def complete
-    @task.update(completed: true, completed_at: Time.now)
+    @task.update(completed: true, completed_at: Time.now, invoice: @task.list.project.current_invoice)
     respond_to do |format|
       format.html { redirect_to project_lists_path(@task.list.project)}
       # format.js
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
   end
 
   def uncomplete
-    @task.update(completed: false, completed_at: nil)
+    @task.update(completed: false, completed_at: nil, invoice: nil)
     respond_to do |format|
       format.html { redirect_to project_lists_path(@task.list.project)}
       # format.js

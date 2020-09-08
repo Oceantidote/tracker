@@ -32,7 +32,11 @@ Rails.application.routes.draw do
     end
   end
   get '/promise/', to: 'pages#promise'
-  resources :invoices
+  resources :invoices do
+    member do
+      patch :approve
+    end
+  end
   resources :users, only: [:edit, :update]
   get 'profile', to: 'pages#profile'
   root to: 'pages#home'

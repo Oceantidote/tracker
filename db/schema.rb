@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_10_183249) do
+ActiveRecord::Schema.define(version: 2020_09_07_193333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,7 +70,8 @@ ActiveRecord::Schema.define(version: 2020_08_10_183249) do
     t.boolean "paid", default: false
     t.float "total"
     t.datetime "paid_at"
-    t.datetime "due_by", default: "2020-09-10 15:23:10"
+    t.datetime "due_by", default: "2020-08-11 12:37:12"
+    t.datetime "issued_at"
     t.index ["project_id"], name: "index_invoices_on_project_id"
   end
 
@@ -154,6 +155,8 @@ ActiveRecord::Schema.define(version: 2020_08_10_183249) do
     t.datetime "completed_at"
     t.bigint "quote_id"
     t.boolean "faulty", default: false
+    t.bigint "invoice_id"
+    t.index ["invoice_id"], name: "index_tasks_on_invoice_id"
     t.index ["list_id"], name: "index_tasks_on_list_id"
     t.index ["quote_id"], name: "index_tasks_on_quote_id"
   end
@@ -217,6 +220,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_183249) do
   add_foreign_key "quote_tasks", "quotes"
   add_foreign_key "quote_tasks", "tasks"
   add_foreign_key "quotes", "users"
+  add_foreign_key "tasks", "invoices"
   add_foreign_key "tasks", "lists"
   add_foreign_key "tasks", "quotes"
   add_foreign_key "team_memberships", "projects"

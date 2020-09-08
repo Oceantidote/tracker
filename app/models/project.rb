@@ -9,6 +9,17 @@ class Project < ApplicationRecord
   has_many :members, through: :team_memberships, source: :user
   after_create :create_lists
 
+  def current_invoice
+    self.invoices.order(created_at: :desc).first
+  end
+
+  def week_passes
+    if self.current_invoice.tasks.any?
+      self.current_invoice.update(approved: false, issued_at: Time.now)
+      Invoice.create!(project: self, approved: nil)
+    end
+  end
+
   def deleteable_memberships
     team_memberships.where("priority > 2")
   end
@@ -43,6 +54,10 @@ class Project < ApplicationRecord
        the site and stuff you want done fast."],
       ["my tasks", "My Tasks 🆓 -> This is a good list type to use for your own tasks or when you are testing out the platform for the first time."]
     ]
+  end
+
+  def week_passes
+
   end
 
   private
