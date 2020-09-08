@@ -3,6 +3,7 @@ class TeamMembershipsController < ApplicationController
   def create
     @team_membership = TeamMembership.new(team_membership_params)
     @team_membership.project = Project.find(params[:project_id])
+    authorize @team_membership
     deal_with_email
     if @team_membership.save
       redirect_to project_team_memberships_path(@team_membership.project)
@@ -39,6 +40,7 @@ class TeamMembershipsController < ApplicationController
 
   def set_team_membership
     @team_membership = TeamMembership.find(params[:id])
+    authorize @team_membership
   end
 
   def team_membership_params
