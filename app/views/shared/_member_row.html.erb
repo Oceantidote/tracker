@@ -2,8 +2,8 @@
   <% if delete %>
     <% memberships.each do |membership| %>
       <%= link_to team_membership_url(membership), method: :delete, class: "nodec", data: { confirm: "Are you sure you want to remove #{membership.user.first_name}" } do %>
-        <div class="avatar-sm <%= membership.relation %>" title='<%= "Remove #{membership.user.full_name}? 😥" %>' style="background-image: url('<%= membership.user.photo.attached? ? url_for(membership.user.photo) : "" %>'); background-color: <%= membership.user.color %>" >
-          <p class="text-center bold m-0"><%= membership.user.initials if !membership.user.photo.attached? %></p>
+        <div class="avatar-sm point <%= membership.relation %>" title='<%= "Remove #{membership.user.full_name}? 😥" %>' style="background-image: url('<%= membership.user.photo.attached? ? url_for(membership.user.photo) : "" %>'); background-color: <%= membership.user.color %>" >
+          <p class="text-center point bold m-0"><%= membership.user.initials if !membership.user.photo.attached? %></p>
         </div>
       <% end %>
     <% end %>
