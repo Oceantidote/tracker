@@ -3,8 +3,8 @@ class Period < ApplicationRecord
   belongs_to :user
   belongs_to :user, :class_name => 'User'
   validates :title, presence: true
-  before_update :set_price
   before_update :set_length!
+  before_update :set_price!
 
   def set_length!
     self.length = current_length
@@ -21,24 +21,22 @@ class Period < ApplicationRecord
 
   def total
     if task.list.payment_type == "support"
-      current_length * user.hourly_rate / 60.0
+      ((current_length * user.hourly_rate / 60.0) * 100).to_i
     elsif task.list.payment_type == "emergency"
-      if task.faulty == true
-        0
-      else
-        current_length * user.hourly_rate / 60.0
-      end
+      ((current_length * user.hourly_rate / 60.0) * 120).to_i
     elsif task.list.payment_type == "quoted"
       if task.completed == true
         current_length / task.total_length * task.price
+      else
+        0
       end
     else
       0
     end
   end
 
-  def set_price
-    price = total
+  def set_price!
+    self.price = total
   end
 
   def humanized_total

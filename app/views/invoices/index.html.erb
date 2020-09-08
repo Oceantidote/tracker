@@ -1,23 +1,40 @@
-<div class="overall-cont">
-  <div class="rhs-cont">
-    <div class="container-fluid">
-      <table>
-        <thead>
-          <tr>
-            <th>User</th>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
+<div class="container pt-4">
+  <div class="backed">
+    <h3 class="tc">Need Approval</h3>
+  </div>
 
-        <tbody>
-          <% @invoices.each do |invoice| %>
-            <tr>
-              <td><%= invoice.project.name %></td>
-              <td><%= link_to 'Show', invoice %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+  <div class="backed">
+    <h3 class="tc">Overdue</h3>
+  </div>
+
+  <div class="backed">
+    <h3 class="tc">Due</h3>
+  </div>
+
+  <div class="backed">
+    <h3 class="tc">Paid</h3>
+  </div>
+
+
+
+  <div class="backed">
+    <table>
+      <thead>
+        <tr>
+          <th>UNPAID INVOICES</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @invoices.where(paid: false).where.not(issued_at: nil).each do |invoice| %>
+          <tr>
+            <td><%= invoice.project.name %></td>
+            <td><%= invoice.total %></td>
+            <td><%= link_to 'Show', invoice %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

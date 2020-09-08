@@ -33,10 +33,11 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     authorize @project
     project_params[:dev_user_id] ? @project.user = current_user : @project.dev_user = current_user
-    TeamMembership.create!(user: @project.user, relation: "client", project: @project)
-    TeamMembership.create!(user: @project.dev_user, relation: "lead", project: @project)
     respond_to do |format|
       if @project.save
+        TeamMembership.create!(user: @project.user, relation: "client", project: @project)
+        TeamMembership.create!(user: @project.dev_user, relation: "lead", project: @project)
+        Invoice.create!(project: @project)
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else

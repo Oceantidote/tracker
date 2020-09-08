@@ -4,7 +4,6 @@ class ListsController < ApplicationController
   # GET /lists
   # GET /lists.json
   def index
-
     @project = Project.find(params[:project_id])
     @lists = ordered_lists
     params[:task] ? @task = Task.find(params[:task]) : @task = Task.new
@@ -66,31 +65,32 @@ class ListsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
 
-    def ordered_lists
-      list = List.includes({tasks: [{ users: :photo_attachment },:user_tasks, { periods: {user: :photo_attachment} }, { notes: :rich_text_content }]}, { project: { team_memberships: { user: :photo_attachment }}}).where(project: @project)
-      quoted = list.where(payment_type: 'quoted')
-      support = list.where(payment_type: 'support')
-      free = list.where(payment_type: 'my_tasks')
-      emergency = list.where(payment_type: 'emergency')
-      if !current_user.accepts_promise
-        [free, quoted, support, emergency]
-      elsif emergency.length > 0
-        [emergency, quoted, support, free]
-      else
-        [quoted, support, free, emergency]
-      end
+  def ordered_lists
+    list = policy_scope(List).where(project: @project)
+    quoted = list.where(payment_type: 'quoted')
+    support = list.where(payment_type: 'support')
+    free = list.where(payment_type: 'my_tasks')
+    emergency = list.where(payment_type: 'emergency')
+    if !current_user.accepts_promise
+      [free, quoted, support, emergency]
+    elsif emergency.length > 0
+      [emergency, quoted, support, free]
+    else
+      [quoted, support, free, emergency]
     end
+  end
 
-    def set_project
-      @project = Project.find(params[:project_id])
-    end
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
 
-    def set_list
-      @list = List.find(params[:id])
-    end
+  def set_list
+    @list = List.find(params[:id])
+    authorize @list
+  end
 
-    # Only allow a list of trusted parameters through.
-    def list_params
-      params.require(:list).permit(:project_id, :name, :payment_type, :description)
-    end
+  # Only allow a list of trusted parameters through.
+  def list_params
+    params.require(:list).permit(:project_id, :name, :payment_type, :description)
+  end
 end

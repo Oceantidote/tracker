@@ -18,4 +18,8 @@ class Invoice < ApplicationRecord
   def approve
     self.update(approved: true)
   end
+
+  def total_cents
+    tasks.sum(&:price)
+  end
 end

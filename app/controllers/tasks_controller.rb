@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = policy_scope(Task)
   end
 
   # GET /tasks/1
@@ -16,6 +16,7 @@ class TasksController < ApplicationController
   # GET /tasks/new
   def new
     @task = Task.new
+    authorize @task
   end
 
   # GET /tasks/1/edit
@@ -43,6 +44,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.list = @list
+    authorize @task
     @tasks = @list.tasks
     if @task.save
       params[:task][:user_ids].reject{|r| r == ""}.each do |id|
@@ -88,6 +90,7 @@ class TasksController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_task
     @task = Task.find(params[:id])
+    authorize @task
   end
 
   # Only allow a list of trusted parameters through.

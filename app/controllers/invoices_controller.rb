@@ -5,6 +5,10 @@ class InvoicesController < ApplicationController
   # GET /invoices.json
   def index
     @invoices = policy_scope(Invoice)
+    @need_approval = @invoices.where(approved: false).where.not(issued_at: nil)
+    @due = @invoices.where("due_by > ? and paid = ?", Time.now, false)
+    @overdue = @invoices.where("due_by < ? and paid = ?", Time.now, false)
+    @paid = @invoices.where(paid: true)
   end
 
   # GET /invoices/1
