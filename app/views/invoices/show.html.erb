@@ -1,9 +1,14 @@
 <div class="container">
   <div class="backed">
+
     <% @invoice.tasks.each do |task| %>
 
     <% end %>
 
+
+    <% if current_user == @invoice.project.user %>
+      <div class="btn">PAY NOW</div>
+    <% end %>
     <% if !@invoice.approved && policy(@invoice).approve? %>
       <%= link_to 'APPROVE', approve_invoice_path(@invoice), method: :patch %> |
       <%= link_to 'Back', invoices_path %>

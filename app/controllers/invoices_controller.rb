@@ -16,6 +16,7 @@ class InvoicesController < ApplicationController
   # GET /invoices/new
   def new
     @invoice = Invoice.new
+    authorize @invoice
   end
 
   # GET /invoices/1/edit
@@ -31,7 +32,7 @@ class InvoicesController < ApplicationController
   # POST /invoices.json
   def create
     @invoice = Invoice.new(invoice_params)
-
+    authorize @invoice
     respond_to do |format|
       if @invoice.save
         format.html { redirect_to @invoice, notice: 'Invoice was successfully created.' }
@@ -69,13 +70,13 @@ class InvoicesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_invoice
-      @invoice = Invoice.find(params[:id])
-      authorize @invoice
-    end
+  def set_invoice
+    @invoice = Invoice.find(params[:id])
+    authorize @invoice
+  end
 
-    # Only allow a list of trusted parameters through.
-    def invoice_params
-      params.require(:invoice).permit(:user_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def invoice_params
+    params.require(:invoice).permit(:user_id)
+  end
 end
