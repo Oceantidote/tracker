@@ -1,6 +1,6 @@
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
-  before_action :set_project, only: [:index, :show, :new, :create, :edit, :update]
+  before_action :set_project, only: [:index, :show, :new, :create]
 
   def index
     @documents = policy_scope(Document.where(project: @project))
@@ -19,7 +19,7 @@ class DocumentsController < ApplicationController
     authorize @document
     @document.project = @project
     if @document.save
-      redirect_to project_document_path(@project, @document)
+      redirect_to document_path(@document)
     else
       render :new
     end
@@ -30,7 +30,7 @@ class DocumentsController < ApplicationController
 
   def update
     if @document.update(document_params)
-      redirect_to project_document_path(@project, @document)
+      redirect_to document_path(@document)
     else
       render :edit
     end
@@ -49,7 +49,12 @@ class DocumentsController < ApplicationController
   end
 
   def set_project
-    @project = Project.find(params[:project_id])
+    if params[:project_id]
+      @project = Project.find(params[:project_id])
+    else
+      @project = @document.project
+    end
+
   end
 
   def document_params

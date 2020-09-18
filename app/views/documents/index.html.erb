@@ -1,12 +1,12 @@
 <div class="top-header rel">
-  <h2><strong>Docs & Files</strong></h2>
+  <h3><%= link_to @project.name, project_path(@project) %> | Docs & Files</h3>
   <%= render 'shared/line', path: nil %>
 </div>
 <div class="container mt-4 p-4">
   <% if @documents.length > 0 %>
     <div class="document-grid">
       <% @documents.each do |document| %>
-        <%= link_to project_document_path(@project, document), class: "small-document-preview-card backed" do %>
+        <%= link_to document_path(document), class: "small-document-preview-card backed" do %>
           <% if document.file.attached? %>
             <% if document.file.filename.to_s.include?('pdf') %>
               <embed src="<%= url_for document.file %>" class="document-preview small-document-preview" type="application/pdf">

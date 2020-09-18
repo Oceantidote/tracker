@@ -1,4 +1,14 @@
-<div class="container backed mt-4 p-4" data-controller="documents">
+<div class="container backed mt-4 p-4">
   <h1 class="text-center">Edit Document</h1>
-  <%= render "form", project: @project, document: @document %>
+  <%= simple_form_for([@project, @document]) do |f| %>
+    <%= f.input :name %>
+    <div class="<%= @document.file.attached? ? 'd-none' : '' %>">
+      <%= f.input :url %>
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+    <div class="<%= @document.file.attached? ? '' : 'd-none' %>">
+      <%= f.input :file, as: :file %>
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
 </div>

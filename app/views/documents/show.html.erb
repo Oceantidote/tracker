@@ -1,3 +1,4 @@
+<h3 class="text-center mt-3"><%= link_to @project.name, project_path(@project) %> | <%= link_to "Docs & Files", project_documents_path(@project) %> | <%= @document.name %></h3>
 <div class="container backed mt-4 p-4">
   <div class="document-preview-holder">
     <% if @document.file.attached? %>
@@ -18,5 +19,12 @@
     <% else %>
       <p><%= link_to "Update document", edit_project_document_path(@project, @document) %></p>
     <% end %>
+  </div>
+  <% @document.notes.order(created_at: :desc).each do |note| %>
+    <%= render "shared/note", note: note %>
+  <% end %>
+  <hr>
+  <div class="sub-note">
+    <%= render "notes/form", note: Note.new, noteable: @document %>
   </div>
 </div>

@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-
-  get 'documents/show'
-  get 'documents/new'
-  get 'documents/edit'
   resources :quotes
   get 'projects/:id/team_memberships', to: "projects#team_memberships"
   resources :team_memberships, only: [:destroy]
@@ -13,10 +9,11 @@ Rails.application.routes.draw do
     root 'pages#dashboard', as: :authenticated_root
   end
   devise_for :users
+  resources :documents, except: [:new, :create, :edit, :update]
   resources :projects, except: [:destroy] do
     resources :team_memberships, only: [:create]
     resources :lists, only: [:new, :create, :index, :update]
-    resources :documents
+    resources :documents, only: [:index, :new, :create, :edit, :update]
   end
   resources :lists, except: [:new, :create, :index, :update] do
     resources :tasks, only: [:new, :create] do
