@@ -1,0 +1,47 @@
+.document-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.small-document-preview-card {
+  height: 200px;
+}
+
+
+.document-preview-holder {
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.document-preview {
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid #E6E6E6;
+  border-radius: 8px;
+}
+
+.small-document-preview {
+  height: 70%;
+}
+
+.document-link {
+  text-align: center;
+  font-size: 28px;
+}
+
+.small-card-url {
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.small-card-url-text {
+  color: $blue !important;
+  font-weight: bold;
+}

@@ -1,0 +1,22 @@
+<div class="container backed mt-4 p-4">
+  <div class="document-preview-holder">
+    <% if @document.file.attached? %>
+      <% if @document.file.filename.to_s.include?('pdf') %>
+        <embed src="<%= url_for @document.file %>" class="document-preview" type="application/pdf">
+      <% else %>
+        <%= image_tag rails_blob_path(@document.file, disposition: 'preview'), alt: "Preview of document", class: "document-preview" %>
+      <% end %>
+    <% else %>
+      <a href="<%= @document.url %>" class="document-link" target="_blank"><%= @document.url %></a>
+    <% end %>
+  </div>
+  <div class="document-details text-center">
+    <h1><%= @document.name %></h1>
+    <p>Posted <%= @document.created_at.strftime('%B %e, %Y') %></p>
+    <% if @document.file.attached? %>
+      <p><%= link_to "Download", rails_blob_path(@document.file, disposition: 'attachment') %> | <%= link_to "Update document", edit_project_document_path(@project, @document) %></p>
+    <% else %>
+      <p><%= link_to "Update document", edit_project_document_path(@project, @document) %></p>
+    <% end %>
+  </div>
+</div>

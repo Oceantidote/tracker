@@ -6,9 +6,15 @@
   min-height: 175px;
   transition: background-color 0.5s;
   border: 1px solid #E6E6E6;
-  h4 {
+  display: block;
+  &:hover {
+    text-decoration: none;
+  }
+  h4, p {
     text-align: center;
     margin: 0;
+    text-decoration: none;
+    color: #0E0000;
   }
 }
 
