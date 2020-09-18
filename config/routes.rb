@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   get 'projects/:id/team_memberships', to: "projects#team_memberships"
   resources :team_memberships, only: [:destroy]
   authenticate :user, ->(user) { user.admin? } do
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   resources :projects, except: [:destroy] do
     resources :team_memberships, only: [:create]
     resources :lists, only: [:new, :create, :index, :update]
+    resources :documents
   end
   resources :quotes, except: [:new, :create] do
     member do

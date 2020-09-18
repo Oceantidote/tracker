@@ -5,7 +5,7 @@
 </div>
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-4 tight-grid">
       <div class="backed">
         <h4 class="elipssis"><strong>Developing now</strong></h4>
         <hr>
@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-4 tight-grid">
       <div class="backed">
         <h4 class="elipssis"><strong><%= link_to "To-dos", project_lists_path(@project), class: "secondary" %></strong>  <span style="font-size: 1.25rem;">✅</span></h4>
         <hr>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-4 tight-grid">
       <div class="backed">
         <h4 class="elipssis"><strong>Campfire</strong></h4>
         <hr>
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-4 tight-grid">
       <div class="backed">
         <h4 class="elipssis"><strong>This Week</strong></h4>
         <hr>
@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-4 tight-grid">
       <div class="backed">
         <h4 class="elipssis"><strong>Invoices</strong></h4>
         <hr>
@@ -92,8 +92,8 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
-      <div class="backed">
+    <div class="col-xs-12 col-sm-6 col-md-4 tight-grid">
+      <%= link_to project_documents_path(@project), class: "backed" do  %>
         <h4 class="elipssis"><strong>Documents</strong></h4>
         <hr>
         <div class="backed-inner">
@@ -102,7 +102,7 @@
             Share docs, files, images, and spreadsheets. Organise in folders so they’re easy to find.
           </p>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
