@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_07_193333) do
+ActiveRecord::Schema.define(version: 2020_09_18_115241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(version: 2020_09_07_193333) do
     t.index ["user_id"], name: "index_activity_logs_on_user_id"
   end
 
+  create_table "documents", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_documents_on_project_id"
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -70,7 +79,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_193333) do
     t.boolean "paid", default: false
     t.float "total"
     t.datetime "paid_at"
-    t.datetime "due_by", default: "2020-08-11 12:37:12"
+    t.datetime "due_by", default: "2020-09-10 15:23:10"
     t.datetime "issued_at"
     t.index ["project_id"], name: "index_invoices_on_project_id"
   end
@@ -210,6 +219,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_193333) do
   add_foreign_key "activity_logs", "periods"
   add_foreign_key "activity_logs", "tasks"
   add_foreign_key "activity_logs", "users"
+  add_foreign_key "documents", "projects"
   add_foreign_key "invoices", "projects"
   add_foreign_key "lists", "projects"
   add_foreign_key "notes", "users"

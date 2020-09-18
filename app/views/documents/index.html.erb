@@ -1,0 +1,28 @@
+<div class="top-header rel">
+  <h2><strong>Docs & Files</strong></h2>
+  <%= render 'shared/line', path: nil %>
+</div>
+<div class="container mt-4 p-4">
+  <% if @documents.length > 0 %>
+    <div class="document-grid">
+      <% @documents.each do |document| %>
+        <%= link_to project_document_path(@project, document), class: "small-document-preview-card backed" do %>
+          <% if document.file.attached? %>
+            <% if document.file.filename.to_s.include?('pdf') %>
+              <embed src="<%= url_for document.file %>" class="document-preview small-document-preview" type="application/pdf">
+            <% else %>
+              <%= image_tag rails_blob_path(document.file, disposition: 'preview'), alt: "Preview of document", class: "document-preview small-document-preview" %>
+            <% end %>
+          <% else %>
+            <div class="small-card-url">
+              <p class="small-card-url-text">View Link</p>
+            </div>
+          <% end %>
+          <p class="mt-3"><strong><%= document.name %></strong></p>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>This is the place to share docs, files, images, and spreadsheets. It looks like you don't have anything here yet, to add a new doc or file just click the little blue plus up there ☝️</p>
+  <% end %>
+</div>
