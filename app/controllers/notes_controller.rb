@@ -6,6 +6,7 @@ class NotesController < ApplicationController
     @note = Note.new(note_params)
     @note.noteable = params[:note][:noteable_type].constantize.find(params[:note][:noteable])
     @note.user = current_user
+    authorize @note
     if @note.save
       redirect_to polymorphic_path(@note.noteable)
     else

@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    authorize current_user
     if current_user.update(user_params)
       redirect_to profile_path
     else

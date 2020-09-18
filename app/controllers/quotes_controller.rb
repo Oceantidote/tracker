@@ -1,5 +1,5 @@
 class QuotesController < ApplicationController
-  before_action :set_quote, only: [:show, :edit, :update, :destroy]
+  before_action :set_quote, only: [:show, :edit, :update, :destroy, :submit_for_acceptance, :accept, :reject]
 
   # GET /quotes
   # GET /quotes.json
@@ -25,15 +25,12 @@ class QuotesController < ApplicationController
   # POST /quotes.json
   def create
     @quote = Quote.new(quote_params)
-
-    respond_to do |format|
-      if @quote.save
-        format.html { redirect_to @quote, notice: 'Quote was successfully created.' }
-        format.json { render :show, status: :created, location: @quote }
-      else
-        format.html { render :new }
-        format.json { render json: @quote.errors, status: :unprocessable_entity }
-      end
+    @quote.list = List.find(params[:list_id])
+    authorize @quote
+    if @quote.save
+      redirect_to @quote, notice: 'Quote was successfully created.'
+    else
+      flash[:notice] = "Please provide a name for your quote"
     end
   end
 
@@ -61,14 +58,31 @@ class QuotesController < ApplicationController
     end
   end
 
+  def submit_for_acceptance
+    @quote.update(status: "awaiting acceptance", rejected_reason: nil)
+    redirect_to @quote
+  end
+
+  def accept
+    @quote.update(status: "accepted", rejected_reason: nil)
+    @quote.tasks.update_all(approved: true)
+    redirect_to @quote
+  end
+
+  def reject
+    @quote.update(status: "rejected", rejected_reason: quote_params[:rejected_reason])
+    redirect_to @quote
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_quote
-      @quote = Quote.find(params[:id])
-    end
+  def set_quote
+    @quote = Quote.find(params[:id])
+    authorize @quote
+  end
 
-    # Only allow a list of trusted parameters through.
-    def quote_params
-      params.require(:quote).permit(:status, :total)
-    end
+  # Only allow a list of trusted parameters through.
+  def quote_params
+    params.require(:quote).permit(:status, :total, :name, :description, :rejected_reason)
+  end
 end

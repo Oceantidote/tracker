@@ -132,22 +132,15 @@ ActiveRecord::Schema.define(version: 2020_09_18_115241) do
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
-  create_table "quote_tasks", force: :cascade do |t|
-    t.bigint "quote_id", null: false
-    t.bigint "task_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["quote_id"], name: "index_quote_tasks_on_quote_id"
-    t.index ["task_id"], name: "index_quote_tasks_on_task_id"
-  end
-
   create_table "quotes", force: :cascade do |t|
-    t.string "status"
     t.integer "total"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_quotes_on_user_id"
+    t.string "name"
+    t.bigint "list_id", null: false
+    t.string "status", default: "pending"
+    t.string "rejected_reason"
+    t.index ["list_id"], name: "index_quotes_on_list_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -162,9 +155,9 @@ ActiveRecord::Schema.define(version: 2020_09_18_115241) do
     t.boolean "completed", default: false
     t.integer "length"
     t.datetime "completed_at"
-    t.bigint "quote_id"
     t.boolean "faulty", default: false
     t.bigint "invoice_id"
+    t.bigint "quote_id"
     t.index ["invoice_id"], name: "index_tasks_on_invoice_id"
     t.index ["list_id"], name: "index_tasks_on_list_id"
     t.index ["quote_id"], name: "index_tasks_on_quote_id"
@@ -227,12 +220,9 @@ ActiveRecord::Schema.define(version: 2020_09_18_115241) do
   add_foreign_key "periods", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "projects", "users", column: "dev_user_id"
-  add_foreign_key "quote_tasks", "quotes"
-  add_foreign_key "quote_tasks", "tasks"
-  add_foreign_key "quotes", "users"
+  add_foreign_key "quotes", "lists"
   add_foreign_key "tasks", "invoices"
   add_foreign_key "tasks", "lists"
-  add_foreign_key "tasks", "quotes"
   add_foreign_key "team_memberships", "projects"
   add_foreign_key "team_memberships", "users"
   add_foreign_key "user_tasks", "tasks"

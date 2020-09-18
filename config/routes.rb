@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :quotes
   get 'projects/:id/team_memberships', to: "projects#team_memberships"
   resources :team_memberships, only: [:destroy]
   authenticate :user, ->(user) { user.admin? } do
@@ -15,7 +14,16 @@ Rails.application.routes.draw do
     resources :lists, only: [:new, :create, :index, :update]
     resources :documents, only: [:index, :new, :create, :edit, :update]
   end
+  resources :quotes, except: [:new, :create] do
+    member do
+      patch :submit_for_acceptance
+      patch :accept
+      patch :reject
+    end
+    resources :tasks, only: [:create]
+  end
   resources :lists, except: [:new, :create, :index, :update] do
+    resources :quotes, only: [:new, :create]
     resources :tasks, only: [:new, :create] do
       member do
         get :complete
@@ -30,6 +38,7 @@ Rails.application.routes.draw do
   resources :periods, only: [:show, :update, :index] do
     member do
       patch :finish
+      patch :accept
     end
   end
   get '/promise/', to: 'pages#promise'

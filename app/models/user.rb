@@ -14,9 +14,9 @@ class User < ApplicationRecord
   has_many :member_projects, through: :team_memberships, source: :project
   has_many :member_lists, through: :member_projects, source: :lists
   has_many :member_tasks, through: :member_projects, source: :tasks
-  has_many :quotes
-  has_many :quote_tasks, through: :quotes
-  has_many :quoted_tasks, through: :quotes, source: :user
+  has_many :quotes, through: :lists
+  has_many :dev_lists, through: :dev_projects, source: :lists
+  has_many :dev_quotes, through: :dev_lists, source: :quotes
   has_many :invoices, through: :projects, source: :invoices
   has_many :user_tasks
   has_many :assigned_tasks, through: :user_tasks, source: :task

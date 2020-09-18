@@ -34,13 +34,13 @@
       </div>
       <div class="col-sm-12 col-md-6">
         <div class="backed">
-          <h4>Invoices needing your approval:</h4>
+          <h4>Quotes needing acceptance:</h4>
           <hr>
           <div class="backed-inner">
-            <% if @invoices.empty? %>
-              <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you have approved all your invoices. You are the best accountant in the world! BEER!" %>
+            <% if @quotes.empty? %>
+              <%= render 'shared/void', emoji: "🍺", title: "No quotes pending acceptance" %>
             <% else %>
-              <%= render 'shared/developer_invoices', invoices: @invoices %>
+              <%= render 'shared/developer_quotes', quotes: @quotes %>
             <% end %>
           </div>
         </div>

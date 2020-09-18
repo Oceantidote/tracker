@@ -8,6 +8,7 @@ class PeriodsController < ApplicationController
     @period = Period.new(nested_period_params)
     @period.user = current_user
     @period.task_id = params[:task_id].to_i
+    authorize @period
     if @period.save
       Period.where.not(id: @period.id).where(user: current_user, end_time: nil).update_all(end_time: Time.now)
       redirect_to period_path(@period)
@@ -24,9 +25,9 @@ class PeriodsController < ApplicationController
     end
     @period.update(time_params)
     if @period.save
-      @period.task.update!(completed: true) if @period.completed
-      @period.task.update!(completed: true) if @period.faulty
-      redirect_to :root
+      @period.task.update!(faulty: @period.faulty)
+      @period.task.complete if @period.completed
+      redirect_to project_path(@period.task.list.project)
     else
       render :show
       flash[:notice] = @period.errors
@@ -48,6 +49,7 @@ class PeriodsController < ApplicationController
 
   def set_period
     @period = Period.find(params[:id])
+    authorize @period
   end
 
 end

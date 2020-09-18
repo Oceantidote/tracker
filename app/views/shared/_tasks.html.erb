@@ -11,7 +11,11 @@
       <%= render "shared/task", task: task, index: index %>
     <% end %>
   <% end %>
-  <%= render 'shared/hidden_task_form', list: list %>
+  <% if list.payment_type == "quoted" %>
+    <%= render 'shared/hidden_quote_form', list: list %>
+  <% else %>
+    <%= render 'shared/hidden_task_form', list: list %>
+  <% end %>
   <% list.tasks.where(completed: true).order(completed_at: :asc).each_with_index do |task, index| %>
     <%= render "shared/complete_task", task: task, index: index %>
   <% end %>

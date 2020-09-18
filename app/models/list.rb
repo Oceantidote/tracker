@@ -1,9 +1,10 @@
 class List < ApplicationRecord
   belongs_to :project
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
   has_many :periods, through: :tasks
   validates :name, presence: true
   validates :payment_type, presence: true
+  has_many :quotes
 
   PAYMENT_TYPES = {
     "emergency" => "Emergency -> If your site has gone down or something is breaking add it here. Your team will be notified immediately and the task will go to the top of their priority list. If we were the cause of the error the tasks will be free, if not the task will be billed hourly upon completion.",

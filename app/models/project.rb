@@ -1,12 +1,13 @@
 class Project < ApplicationRecord
   belongs_to :user
   belongs_to :dev_user, :class_name => "User"
-  has_many :lists
+  has_many :lists, dependent: :destroy
   has_many :tasks, through: :lists
   has_many :periods, through: :tasks
-  has_many :invoices
-  has_many :team_memberships
+  has_many :invoices, dependent: :destroy
+  has_many :team_memberships,  dependent: :destroy
   has_many :members, through: :team_memberships, source: :user
+  validates :name, presence: true
   after_create :create_lists
 
   def current_invoice
@@ -16,8 +17,12 @@ class Project < ApplicationRecord
   def week_passes
     if self.current_invoice.tasks.any?
       self.current_invoice.update(approved: false, issued_at: Time.now)
-      Invoice.create!(project: self, approved: nil)
+      Invoice.create!(project: self, approved: nil, total: calculate_total)
     end
+  end
+
+  def calculate_total
+    self.tasks.sum(&:total)
   end
 
   def deleteable_memberships
@@ -37,7 +42,7 @@ class Project < ApplicationRecord
   end
 
   def unpaid_invoices
-    invoices.order(due_by: :asc).where(paid_at: nil)
+    invoices.order(due_by: :asc).where(paid_at: nil, issued_at: nil, approved: true)
   end
 
   def live_periods
