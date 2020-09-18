@@ -1,0 +1,44 @@
+
+<%= simple_form_for [list, Quote.new], html: { id: "quote_form_#{list.id}", class: "task-form mt-2" } do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <h4 class="blue">Request a quote</h4>
+    <hr>
+
+    <%= f.input :name, placeholder: "Let's give this quote a name", input_html: {id: "name_#{list.id}" }, label: false %>
+  </div>
+  <p>Please add any additional information or documents below</p>
+  <%= f.rich_text_area :description %>
+  <div class="jc mt-4">
+    <%= f.button :submit, class: 'btn btn-primary', id: "confirm_#{list.id}" %>
+    <div class="btn btn-tertiary ml-2" id="hide_task_<%= list.id %>">
+      Cancel
+    </div>
+  </div>
+<% end %>
+<div class="line-link showme mb-2" id="new_task_<%= list.id %>">
+  <i class="fas fa-plus blue"></i>
+</div>
+
+
+
+
+<script>
+  document.getElementById('new_task_<%= list.id %>').addEventListener('click', (e) => {
+    document.getElementById('quote_form_<%= list.id %>').classList.add('high')
+    e.target.classList.add('hide')
+  })
+  document.getElementById('hide_task_<%= list.id %>').addEventListener('click', (e) => {
+    document.getElementById('quote_form_<%= list.id %>').classList.remove('high')
+    document.getElementById('new_task_<%= list.id %>').classList.remove('hide')
+  })
+  document.getElementById('confirm_<%= list.id %>').addEventListener('click', (e) => {
+    if (document.getElementById('name_<%= list.id %>').value == "") {
+      e.preventDefault()
+      document.getElementById('name_<%= list.id %>').classList.add("shake")
+      setTimeout(function(){ document.getElementById('name_<%= list.id %>').classList.remove("shake"); }, 1000);
+    }
+  })
+</script>

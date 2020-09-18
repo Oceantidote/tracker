@@ -17,6 +17,10 @@ class TaskPolicy < ApplicationPolicy
     show?
   end
 
+  def create_quote_task?
+    user.admin
+  end
+
   def uncomplete?
     show?
   end

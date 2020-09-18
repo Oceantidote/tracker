@@ -31,9 +31,9 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-6">
+      <div class="col-sm-12 col-md-4">
         <div class="backed">
-          <h4><strong>Invoices needing your approval:</strong></h4>
+          <h4><strong>Invoices to approve:</strong></h4>
           <hr>
           <div class="backed-inner">
             <% if @my_invoices.empty? %>
@@ -45,7 +45,20 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-md-6">
+      <div class="col-sm-12 col-md-4">
+        <div class="backed">
+          <h4><strong>Pending quotes:</strong></h4>
+          <hr>
+          <div class="backed-inner">
+            <% if @my_quotes.empty? %>
+              <%= render 'shared/void', emoji: "🍺", title: "Well done!", message: "It looks like you have completed all your quotes. BEER!" %>
+            <% else %>
+              <%= render 'shared/developer_quotes', quotes: @my_quotes %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
         <div class="backed">
           <h4><strong>Leaderboard</strong></h4>
           <hr>

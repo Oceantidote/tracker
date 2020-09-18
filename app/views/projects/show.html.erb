@@ -56,7 +56,7 @@
           <% if @project.current_invoice.tasks.any? %>
             <% @project.current_invoice.tasks.each do |task| %>
               <div class="sub-backed">
-                <p class='m-0'><%= task.name %> - <%= task.humanized_total %></p>
+                <p class='m-0'><%= task.name %> - <%= task.humanized_total(task.price) %></p>
                 <%= link_to task_path(task), class: "link" do %>
                 <% end %>
               </div>

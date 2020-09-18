@@ -1,14 +1,92 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="backed mt-4">
+    <h3 class="text-center"><%= @quote.name %></h3>
+    <h5 class="text-center" style="color: <%= @quote.color %>"><%= @quote.status %></h5>
+    <p class="text-center"><%= @quote.rejected_reason %></p>
+    <%= @quote.description %>
+    <div class="row mt-4 mb-1">
+      <div class="col-6"><strong>Name</strong></div>
+      <div class="col-3"><strong>Duration</strong></div>
+      <div class="col-3"><strong>Price</strong></div>
+    </div>
+    <% @quote.tasks.each do |task| %>
+      <div class="sub-backed">
+        <div class="row">
+          <div class="col-6"><%= task.name %></div>
+          <div class="col-3"><%= @quote.readable_length(task.length) %></div>
+          <div class="col-3"><%= @quote.humanized_total(task.price) %></div>
+        </div>
+      </div>
+    <% end %>
+    <div class="row mt-2 mb-4">
+      <div class="col-6"><strong>Total:</strong></div>
+      <div class="col-3"><strong><%= @quote.readable_length(@quote.tasks.sum(&:length)) %></strong></div>
+      <div class="col-3"><strong><%= @quote.humanized_total(@quote.tasks.sum(&:price)) %></strong></div>
+    </div>
+    <hr>
+    <% if policy(@quote).accept? && @quote.status == "awaiting acceptance" %>
+      <div class="jc mb-4">
+        <%= link_to accept_quote_path(@quote), method: :patch do %>
+          <div class="btn btn-primary">Accept</div>
+        <% end %>
+      </div>
+      <p class="text-center">Or</p>
+      <%= form_for(@quote, url: reject_quote_path) do |f| %>
+        <%= f.text_field :rejected_reason, placeholder: "Why are you rejecting thgis quote?" %>
+        <%= f.submit "Reject" %>
+      <% end %>
+    <% end %>
+    <% if policy(@quote).submit_for_acceptance? && (@quote.status == "pending" || @quote.status == "rejected") %>
+      <div class="fe mb-4">
+        <%= link_to submit_for_acceptance_quote_path(@quote), method: :patch do %>
+          <div class="btn btn-primary">Submit for approval</div>
+        <% end %>
+      </div>
+      <%= simple_form_for [@quote, Task.new] do |f| %>
+       <%= f.error_notification %>
+       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-<p>
-  <strong>Status:</strong>
-  <%= @quote.status %>
-</p>
+       <div class="form-inputs">
+         <h4 class="blue">Add a new task</h4>
+         <hr>
 
-<p>
-  <strong>Total:</strong>
-  <%= @quote.total %>
-</p>
+         <%= f.input :name, placeholder: "Let's give this task a name", label: false %>
+         <%= f.input :description, placeholder: "Perhaps a brief description too...", label: false %>
+         <%= f.input :length, placeholder: "Projected time for this task in minutes", label: false %>
+         <div class="js">
+           <input type="date" class="form-control w50" id= "completed_by" name="task[completed_by]" label= "completed_by">
+           <p class="mb-0 w50 pl-2">Needs to be completed by?</p>
+         </div>
 
-<%= link_to 'Edit', edit_quote_path(@quote) %> |
-<%= link_to 'Back', quotes_path %>
+         <!-- ASSIGN TEAM MEMBERS -->
+         <div class="form-group mt-4">
+           <input type="hidden" name="task[user_ids][]" value="">
+           <div class="category-choices">
+             <% @quote.list.project.valid_members.each do |user| %>
+               <label class="category-choice jca" title="<%= user.full_name %>" style="background-image: url('<%= user.photo.attached? ? url_for(user.photo) : "" %>'); background-color: <%= user.color %>">
+                 <p class="text-center bold m-0"><%= user.initials if !user.photo.attached? %></p>
+               </label>
+               <input type="checkbox" class="hdchekbox mr-2" value="<%= user.id %>" name="task[user_ids][]" id="task_user_ids_<%= user.id %>">
+             <% end %>
+             <p>Assign this task to any users?<p>
+            </div>
+         </div>
+
+       </div>
+
+       <div class="jc mt-4">
+         <%= f.button :submit, class: 'btn btn-primary' %>
+       </div>
+      <% end %>
+    <% end %>
+  </div>
+  <% @quote.notes.order(created_at: :desc).each do |note| %>
+    <%= render "shared/note", note: note %>
+  <% end %>
+  <hr>
+  <div class="sub-note">
+    <%= render "notes/form", note: Note.new, noteable: @quote %>
+  </div>
+</div>
+
+

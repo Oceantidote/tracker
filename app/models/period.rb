@@ -38,12 +38,4 @@ class Period < ApplicationRecord
   def set_price!
     self.price = total
   end
-
-  def humanized_total
-    rev_string = total.to_s.reverse
-    pennies = rev_string[0..1]&.reverse
-    pounds = rev_string[2..5]&.reverse
-    thousands = rev_string[6..-1]&.reverse
-    "£ #{thousands + ',' if thousands}#{pounds}.#{pennies}"
-  end
 end

@@ -1,12 +1,12 @@
 <% if task.payment_type == "quoted" %>
   <div class="sub-hold">
     <p class="ml-2 mb-0">
-      <% if task.quote&.accepted %>
+      <% if task.quote&.status == "accepted" %>
         <span class="<%= task.length < task.total_length ? 'red' : 'green' %>">
           <%= task.readable_length(task.total_length) %>
         </span>
         <span class="target">🎯</span>
-        <%= task.readable_length(task.total_length) %>
+        <%= task.readable_length(task.length) %>
       <% elsif task.quote %>
 
       <% end %>

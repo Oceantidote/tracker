@@ -53,12 +53,4 @@ class Task < ApplicationRecord
     self.update!(completed: true, invoice: self.list.project.current_invoice)
   end
 
-  def humanized_total
-    rev_string = price.to_s.reverse
-    pennies = rev_string[0..1]&.reverse || '00'
-    pounds = rev_string[2..5]&.reverse || '0'
-    thousands = rev_string[6..-1]&.reverse
-    "£ #{thousands + ',' if thousands}#{pounds}.#{pennies}"
-  end
-
 end
