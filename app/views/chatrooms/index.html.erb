@@ -4,7 +4,7 @@
 </div>
 <div class="container chatrooms-grid">
   <% @chatrooms.each do |chatroom| %>
-    <%= link_to chatroom_path(chatroom), class: "chatroom-link" do %>
+    <%= link_to chatroom_path(chatroom, anchor: "message-#{chatroom.messages.length}"), class: "chatroom-link" do %>
       <div class="chatroom-link-img" style="background-color: <%= chatroom.project.user.color %>"><%= chatroom.project.initials %></div>
       <p class="chatroom-link-name"><%= chatroom.name %></p>
     <% end %>
