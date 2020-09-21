@@ -1,11 +1,11 @@
 class ChatroomPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      scope.where(project_id: user.member_projects)
     end
   end
 
   def show?
-    true
+    user.member_projects.include?(record.project) || user.admin
   end
 end

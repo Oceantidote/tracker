@@ -1,6 +1,6 @@
 <div class="<%= message.user == current_user ? 'message current-user-message' : 'message other-user-message' %>" id="message-<%= message.id %>" data-author="<%= message.user.id %>">
   <div class="avatar-sm query" title='<%= "#{message.user.full_name}" %>' style="background-image: url('<%= message.user.photo.attached? ? url_for(message.user.photo) : "" %>'); background-color: <%= message.user.color %>" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-     <p class="text-center bold m-0"><%= message.user.initials if !message.user.photo.attached? %></p>
+     <p class="text-center bold m-0 white"><%= message.user.initials if !message.user.photo.attached? %></p>
   </div>
   <div class="mx-2">
     <i><small><%= message.created_at.strftime("%a %b %e at %l:%M%p") %></small></i>

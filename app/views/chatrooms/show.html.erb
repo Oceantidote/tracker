@@ -1,5 +1,9 @@
 <div class="top-header rel">
-  <h3><%= link_to @chatroom.project.name, project_path(@chatroom.project) %> | Messages</h3>
+  <% if @chatroom.project %>
+    <h3><%= link_to @chatroom.project.name, project_path(@chatroom.project) %> | Messages</h3>
+  <% else %>
+    <h3>Messages</h3>
+  <% end %>
 </div>
 <div class="container backed messages-container">
   <div id="messages" data-chatroom-id="<%= @chatroom.id %>" data-user="<%= current_user.id %>">
