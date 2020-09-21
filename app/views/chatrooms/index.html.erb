@@ -1,0 +1,12 @@
+<div class="top-header rel">
+  <h2><strong>Messages</strong></h2>
+  <%= render 'shared/line', path: nil %>
+</div>
+<div class="container chatrooms-grid">
+  <% @chatrooms.each do |chatroom| %>
+    <%= link_to chatroom_path(chatroom), class: "chatroom-link" do %>
+      <div class="chatroom-link-img" style="background-color: <%= chatroom.project.user.color %>"><%= chatroom.project.initials %></div>
+      <p class="chatroom-link-name"><%= chatroom.name %></p>
+    <% end %>
+  <% end %>
+</div>

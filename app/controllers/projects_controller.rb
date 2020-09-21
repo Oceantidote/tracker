@@ -38,6 +38,7 @@ class ProjectsController < ApplicationController
         TeamMembership.create!(user: @project.user, relation: "client", project: @project)
         TeamMembership.create!(user: @project.dev_user, relation: "lead", project: @project)
         Invoice.create!(project: @project)
+        Chatroom.create!(name: @project.name, project: @project)
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else

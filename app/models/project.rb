@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   belongs_to :user
   belongs_to :dev_user, :class_name => "User"
+  has_one :chatroom, dependent: :destroy
   has_many :lists, dependent: :destroy
   has_many :tasks, through: :lists
   has_many :periods, through: :tasks
@@ -9,6 +10,10 @@ class Project < ApplicationRecord
   has_many :members, through: :team_memberships, source: :user
   validates :name, presence: true
   after_create :create_lists
+
+  def initials
+    name.split.map { |word| word[0].upcase }.join('')
+  end
 
   def current_invoice
     self.invoices.order(created_at: :desc).first

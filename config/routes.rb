@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     root 'pages#dashboard', as: :authenticated_root
   end
   devise_for :users
-  resources :chatrooms, only: :show do
+  resources :chatrooms, only: [:index, :show] do
     resources :messages, only: :create
   end
   resources :documents, except: [:new, :create, :edit, :update]
