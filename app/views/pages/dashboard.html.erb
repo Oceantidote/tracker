@@ -38,7 +38,7 @@
           <hr>
           <div class="backed-inner">
             <% if @quotes.empty? %>
-              <%= render 'shared/void', emoji: "🍺", title: "No quotes pending acceptance" %>
+              <%= render 'shared/void', emoji: "🍺", title: "No quotes pending acceptance", message: 'shared/void partial errors without a message' %>
             <% else %>
               <%= render 'shared/developer_quotes', quotes: @quotes %>
             <% end %>
