@@ -1,0 +1,31 @@
+.messages-container {
+  padding: 20px 40px;
+}
+
+#messages {
+  min-height: 70vh;
+}
+
+.message {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.other-user-message {
+  flex-direction: row !important;
+  text-align: left !important;
+  padding: 0 120px 0 0 !important;
+  p {
+    text-align: left !important;
+  }
+}
+
+.current-user-message {
+  flex-direction: row-reverse;
+  text-align: right;
+  padding: 0 0 0 120px;
+  p {
+    text-align: right;
+  }
+}

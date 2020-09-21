@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_083517) do
+ActiveRecord::Schema.define(version: 2020_09_21_094806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 2020_09_21_083517) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "project_id"
+    t.index ["project_id"], name: "index_chatrooms_on_project_id"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -85,7 +87,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_083517) do
     t.boolean "paid", default: false
     t.float "total"
     t.datetime "paid_at"
-    t.datetime "due_by", default: "2020-09-10 15:23:10"
+    t.datetime "due_by", default: "2020-09-28 09:53:58"
     t.datetime "issued_at"
     t.index ["project_id"], name: "index_invoices_on_project_id"
   end
@@ -228,6 +230,7 @@ ActiveRecord::Schema.define(version: 2020_09_21_083517) do
   add_foreign_key "activity_logs", "periods"
   add_foreign_key "activity_logs", "tasks"
   add_foreign_key "activity_logs", "users"
+  add_foreign_key "chatrooms", "projects"
   add_foreign_key "documents", "projects"
   add_foreign_key "invoices", "projects"
   add_foreign_key "lists", "projects"

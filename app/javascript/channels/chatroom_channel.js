@@ -7,7 +7,12 @@ const initChatroomCable = () => {
 
     consumer.subscriptions.create({ channel: "ChatroomChannel", id: id }, {
       received(data) {
-        messagesContainer.insertAdjacentHTML('beforeend', data);
+        if (document.getElementById('messages').dataset.user === data.match(/data-author="(\d)"/)[1]) {
+          var message = data.replace('class="message', 'class="message current-user-message')
+        } else {
+          var message = data.replace('class="message', 'class="message other-user-message')
+        }
+        messagesContainer.insertAdjacentHTML('beforeend', message);
       },
     });
   }

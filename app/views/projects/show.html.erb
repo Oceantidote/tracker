@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 tight-grid">
-      <div class="backed">
+      <%= link_to chatroom_path(@project.chatroom), class: "backed" do %>
         <h4 class="elipssis"><strong>Campfire</strong></h4>
         <hr>
         <div class="backed-inner">
@@ -45,7 +45,7 @@
             Chat casually with the team, ask random questions, and share stuff without ceremony.
           </p>
         </div>
-      </div>
+      <% end %>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 tight-grid">
       <div class="backed">

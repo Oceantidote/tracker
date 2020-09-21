@@ -1,13 +1,18 @@
-<div class="container">
-  <h1>#<%= @chatroom.name %></h1>
-  <div id="messages" data-chatroom-id="<%= @chatroom.id %>">
-    <% @chatroom.messages.each do |message| %>
-      <%= render "messages/message", message: message %>
+<div class="top-header rel">
+  <h3><%= link_to @chatroom.project.name, project_path(@chatroom.project) %> | Messages</h3>
+</div>
+<div class="container backed messages-container">
+  <div id="messages" data-chatroom-id="<%= @chatroom.id %>" data-user="<%= current_user.id %>">
+    <% if @chatroom.messages.length > 0 %>
+      <% @chatroom.messages.each do |message| %>
+        <%= render "messages/message", message: message %>
+      <% end %>
+    <% else %>
+      <p class="text-center">This is the best place to hash things out quickly, throw links and images back and forth, think out loud, share news, riff, and chat in real-time with your team.</p>
     <% end %>
   </div>
 
   <%= simple_form_for [ @chatroom, @message ], remote: true do |f| %>
-    <%= f.input :content, label: false, placeholder: "Message ##{@chatroom.name}" %>
-    <%= f.submit %>
+    <%= f.input :content, label: false, placeholder: "Message #{@chatroom.name}" %>
   <% end %>
 </div>
