@@ -6,7 +6,7 @@
   <% end %>
 </div>
 <div class="container backed messages-container">
-  <div id="messages" data-chatroom-id="<%= @chatroom.id %>" data-user="<%= current_user.id %>">
+  <div id="messages" data-chatroom-id="<%= @chatroom.id %>" data-user="<%= current_user.id %>" data-controller="chatrooms">
     <% if @chatroom.messages.length > 0 %>
       <% @chatroom.messages.each do |message| %>
         <%= render "messages/message", message: message %>

@@ -3,8 +3,8 @@
 }
 
 #messages {
-  height: 70vh;
-  overflow: scroll;
+  min-height: 70vh;
+  // overflow: scroll;
 }
 
 .message {
